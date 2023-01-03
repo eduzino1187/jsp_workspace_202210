@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        input[type=button] {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=button]:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+    </style>
+    <script>
+        //js 를 좀더 단순하게 사용할순 없나? 
+        //jquery...가 출시됨 ( 2006년 소개)
+        window.addEventListener("load", function(){
+            let bt=document.querySelector("input[type=button]");
+            bt.addEventListener("click", function(){
+                console.log("눌럿어");
+            });                     
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <h3>Contact Form</h3>
+
+    <div class="container">
+        <form>
+            <label for="fname">제목</label>
+            <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+            <label for="lname">작성자</label>
+            <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+            <label for="subject">내용</label>
+            <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+            <!-- submit 은 현재 form 태그의 내용을 무조건 전송하므로
+            무조건 전송을 방지하기 위해 일반  button -->
+            <input type="button" value="Submit">
+        </form>
+    </div>
+
+</body>
+
+</html>
