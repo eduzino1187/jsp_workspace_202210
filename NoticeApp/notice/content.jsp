@@ -17,6 +17,9 @@
 	//한건 가져오기 
 	Notice notice = noticeDAO.select(notice_idx);
 
+	//조회수 증가 
+	noticeDAO.updateHit(notice_idx);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -68,11 +71,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
 		$(function(){
+			//수정요청
+			$($("input[type='button']")[0]).click(function(){
+				//내용이 많을 뿐만 아니라, form을 이용한 전송이므로  POST방식
+				//으로 전송하자!!
+				$("form").attr("method", "POST");
+				$("form").attr("action", "/notice/update.jsp");
+				$("form").submit();
+			});
+
 			$($("input[type='button']")[1]).click(function(){
 				//삭제요청
 				//GET : 링크 
 				location.href="/notice/delete.jsp?notice_idx=<%=notice.getNotice_idx()%>";
 			});
+
+			$($("input[type='button']")[2]).click(function(){
+				location.href="/notice/list.jsp";//GET : 링크 
+			});
+
 		});
 
     </script>
@@ -85,7 +102,8 @@
 
     <div class="container">
         <form method="post" action="/notice/regist.jsp">
-
+			<input type="hidden" name="notice_idx" value="<%=notice.getNotice_idx()%>" style="background:yellow">	
+				
             <input type="text" name="title" value="<%=notice.getTitle()%>">
 
             <input type="text" name="writer" value="<%=notice.getWriter()%>">

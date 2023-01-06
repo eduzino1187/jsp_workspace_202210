@@ -210,7 +210,86 @@ public class NoticeDAO{
 	//한건 수정 
 	public int update(Notice notice){
 		int result=0;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+
+		try{
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con=DriverManager.getConnection(url, user,password);			
+			String sql="update notice set title=?, writer=?, content=?";
+			sql+=" where notice_idx=?";
+	
+			pstmt=con.prepareStatement(sql);
+
+			pstmt.setString(1, notice.getTitle());
+			pstmt.setString(2, notice.getWriter());
+			pstmt.setString(3, notice.getContent());
+			pstmt.setInt(4, notice.getNotice_idx());
+
+			result=pstmt.executeUpdate(); //DML 실행
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}catch(SQLException e){
+			e.printStackTrace();			
+		}finally{
+			if(pstmt!=null){
+				try{
+					pstmt.close();
+				}catch(SQLException e){
+					e.printStackTrace();
+				}
+			}
+			if(con!=null){
+				try{
+					con.close();
+				}catch(SQLException e){
+					e.printStackTrace();
+				}
+			}
+		}
+
+		System.out.println("insert() 호출");
+		return result;
+	}	
+	
+	//글 조회수 증가 
+	public int updateHit(int notice_idx){
+		int result=0;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+
+		try{		
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con=DriverManager.getConnection(url, user, password);
+			
+			String sql="update notice set hit=hit+1 where notice_idx=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, notice_idx);
+			result=pstmt.executeUpdate();//쿼리실행
+
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			if(pstmt!=null){
+				try{
+					pstmt.close();
+				}catch(SQLException e){
+					e.printStackTrace();
+				}
+			}
+			if(con!=null){
+				try{
+					con.close();
+				}catch(SQLException e){
+					e.printStackTrace();
+				}
+			}			
+
+		}
 
 		return result;
 	}
+
 }
