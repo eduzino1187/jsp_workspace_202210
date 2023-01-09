@@ -1,9 +1,15 @@
+<%@page import="gallery.domain.Gallery"%>
+<%@page import="gallery.repository.GalleryDAO"%>
 <%@page import="gallery.util.FileManager"%>
 <%@page import="java.io.File"%>
 <%@page import="java.io.IOException"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%!
+	GalleryDAO galleryDAO = new GalleryDAO();
+%>
 <%
+	
 	//파라미터를 받아 오라클에 넣기
 	request.setCharacterEncoding("utf-8");//파라미터에 대한 인코딩처리
 	
@@ -19,6 +25,7 @@
 		multi=new MultipartRequest(request,savePath, maxSize, "utf-8");
 		//이미 생성자에서 업로드가 완료되었기 때문에, 생성된 파일을 대상으로 
 		//파일명을 바꾸자 
+	
 		
 		//업로드된 파일의 레퍼런스 얻기!!
 		File file=multi.getFile("file"); //html에서의 컴포넌트 이름
@@ -31,16 +38,30 @@
 		String writer=multi.getParameter("writer");
 		String content=multi.getParameter("content");
 		
-		out.print(title+"<br>");
-		out.print(writer+"<br>");
-		out.print(content+"<br>");
+		//DTO 에 담기 
+		Gallery gallery =new Gallery();
+		gallery.setTitle(title);
+		gallery.setWriter(writer);
+		gallery.setContent(content);
+		gallery.setFilename(time+"."+ext);//파일명 채우기
 		
+		//dao insert 호출 
+		int result = galleryDAO.insert(gallery);
+		
+		out.print("<script>");
+		if(result>0){
+			out.print("alert('업로드 성공');");
+			out.print("location.href='/gallery/list.jsp';");
+		}
+		out.print("</script>");
 		
 	}catch(IOException e){
-		out.print("파일의 크기는 5MB이하로 제한되어 있습니다");	
+		
+		out.print("<script>");
+		out.print("alert('파일의 크기는 5MB이하로 제한되어 있습니다');");
+		out.print("history.back();");
+		out.print("</script>");
 	}
-	
-	//String file=request.getParameter("file");
 %>
 
 

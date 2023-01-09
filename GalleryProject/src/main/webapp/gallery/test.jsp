@@ -14,6 +14,8 @@
 	//얻어온 커넥션풀로부터  Connection 하나를 대여하자!!
 	Connection con = ds.getConnection();
 	out.print(con);
+	con.close();
+
 	
 %>
 

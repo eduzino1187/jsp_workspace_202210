@@ -9,7 +9,7 @@
 function regist(){
 	//서버에 파일(바이너리 형식의 파일)을 포함한 폼을 전송한다!!
 	$("form").attr({
-		"action":"/gallery/upload.jsp",
+		"action":"/gallery/upload",
 		"method":"post",
 		//폼양식에 바이너리 파일이 포함된 경우 반드시!!!!! 지정
 		"enctype":"multipart/form-data"   
