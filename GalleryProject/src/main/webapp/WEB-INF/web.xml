@@ -11,4 +11,51 @@
 		<url-pattern>/gallery/upload</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>deleteServlet</servlet-name>
+		<servlet-class>gallery.servlet.DeleteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>deleteServlet</servlet-name>
+		<url-pattern>/gallery/del</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>editServlet</servlet-name>
+		<servlet-class>gallery.servlet.EditServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>editServlet</servlet-name>
+		<url-pattern>/gallery/edit</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>updateServlet</servlet-name>
+		<servlet-class>gallery.servlet.UpdateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>updateServlet</servlet-name>
+		<url-pattern>/gallery/update</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>registServlet</servlet-name>
+		<servlet-class>member.servlet.RegistServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>registServlet</servlet-name>
+		<url-pattern>/member/regist</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>loginServlet</servlet-name>
+		<servlet-class>member.servlet.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>loginServlet</servlet-name>
+		<url-pattern>/member/login</url-pattern>
+	</servlet-mapping>
+		
 </web-app>
+
+

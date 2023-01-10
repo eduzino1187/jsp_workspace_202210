@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,13 +19,16 @@ import gallery.util.FileManager;
 //기존의 upload.jsp를 버리고, 오직 서블릿만으로, 업로드를 구현해본다
 public class UploadServlet extends HttpServlet{
 	GalleryDAO galleryDAO = new GalleryDAO();
+	ServletContext context;
 	
 	//service() 메서드에 의해 호출된다
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=UTF-8");
+
+		context = request.getServletContext();
+		String savePath=context.getRealPath("/data/");
 		
-		String savePath="C:/jsp_workspace/GalleryProject/data/";
 		int maxSize=1024*1024*5; //5MB 제한
 		MultipartRequest multi=null;
 		

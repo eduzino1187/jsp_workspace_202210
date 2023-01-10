@@ -17,12 +17,7 @@
 	//기존에 텍스트 파라미터를 받을때 사용하는 getParameter() 메서드로
 	//는 바이너리 파일을 포함한 기타 파라미터도 받을 수 없다. 
 	//해결책) 업로드 라이브러리를 이용해야 한다 
-	
-	//우리가 서블릿에서 사용했던 ServletContext 인터페이스는  jsp에서
-	//내장객체로 지원을 하고 있다.따라서 서블릿을 할줄 모르는 개발자는 
-	//내장객체를 이용할 수 있다.  
-	String savePath = application.getRealPath("/data/");
-	
+	String savePath="C:/jsp_workspace/GalleryProject/src/main/webapp/data/";
 	int maxSize=1024*1024*5; //5MB 제한
 	MultipartRequest multi=null;
 	
