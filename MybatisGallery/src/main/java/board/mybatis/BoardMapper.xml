@@ -22,7 +22,17 @@
 	<select id="select" resultType="Board" parameterType="int">
 		select * from board where board_idx=#{board_idx}
 	</select>
+	
+	<update id="update" parameterType="Board">
+		update board  set title=#{title}, writer=#{writer}
+		, content=#{content}, filename=#{filename}  
+		where board_idx=#{board_idx}			
+	</update>
+	
 </mapper>
+
+
+
 
 
 

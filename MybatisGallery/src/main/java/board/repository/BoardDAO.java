@@ -36,9 +36,15 @@ public class BoardDAO {
 		return board;
 	}
 	
-	public void update() {
-		
+	public int update(Board board) {
+		int result=0;
+		SqlSession sqlSession = config.getSqlSession();
+		result=sqlSession.update("Board.update", board);
+		sqlSession.commit(); //DML 이므로..
+		config.release(sqlSession);
+		return result;
 	}
+	
 	public void delete() {
 			
 	}

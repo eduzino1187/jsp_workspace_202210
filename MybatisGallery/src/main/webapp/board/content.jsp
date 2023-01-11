@@ -15,11 +15,10 @@
 <title>글등록</title>
 <%@ include file="/inc/header_link.jsp"%>
 <script type="text/javascript">
-function regist(){
+function edit(){
 	$("#form1").attr({
-		"action":"/board/regist", 
+		"action":"/board/update", 
 		"method":"post",
-		//application/x-www-form-urlencoded 디폴트
 		"enctype":"multipart/form-data"
 	});		
 	$("#form1").submit();
@@ -46,11 +45,11 @@ $(function(){
 	
 	//버튼에 이벤트 연결 
 	$($("button")[0]).click(function(){
-		regist();
+		edit();
 	});
 	
-	$($("button")[1]).click(function(){
-		alert("목록보기");
+	$($("button")[2]).click(function(){
+		location.href="/board/list.jsp";
 	});
 	
 	$("#file").on("change", function(){
@@ -69,6 +68,9 @@ $(function(){
 	
 	<div class="container mt-2">
 		<form id="form1">
+			<input type="hidden" name="board_idx" value="<%=board.getBoard_idx()%>">
+			<input type="hidden" name="filename" value="<%=board.getFilename()%>">
+			
 			<div class="row text-center">
 				<h3>글내용보기</h3>		
 			</div>
@@ -91,8 +93,9 @@ $(function(){
 			</div>
 			<div class="row mt-2">
 				<div class="col text-center">
-					<button class="btn btn-warning">글등록</button>		
-					<button class="btn btn-warning">글목록</button>		
+					<button type="button" class="btn btn-warning">수정</button>		
+					<button type="button" class="btn btn-warning">삭제</button>		
+					<button type="button" class="btn btn-warning">목록</button>		
 				</div>
 			</div>
 		</form>	

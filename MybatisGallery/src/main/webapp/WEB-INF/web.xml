@@ -22,6 +22,15 @@
 		<url-pattern>/board/regist</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>updateServlet</servlet-name>
+		<servlet-class>board.servlet.UpdataServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>updateServlet</servlet-name>
+		<url-pattern>/board/update</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
 
 
