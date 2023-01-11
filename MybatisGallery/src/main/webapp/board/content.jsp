@@ -24,8 +24,20 @@ function regist(){
 	});		
 	$("#form1").submit();
 }
+//미리보기 구현 (파일정보를 가진 obj  받기)
+function preview(obj){
+	// 넘겨받은 파일객체를 스트림으로 읽어, src 에 대입 
+	let reader = new FileReader();
+	
+	reader.onload=function(e){
+		//console.log(e.target.result);
+		$("#pic").attr("src",e.target.result);
+	};
+	reader.readAsDataURL(obj);	
+}
 
 $(function(){
+	
 	ClassicEditor
 		.create(document.querySelector("#content") )
 		.catch( error => {
@@ -40,6 +52,12 @@ $(function(){
 	$($("button")[1]).click(function(){
 		alert("목록보기");
 	});
+	
+	$("#file").on("change", function(){
+		console.log(this.files[0]);
+		preview(this.files[0]);
+	});
+	
 });
 	
 	
@@ -65,11 +83,11 @@ $(function(){
 			</div>
 			
 			<div class="row mt-2">
-				이미지 넣기
+				<img src="/data/<%=board.getFilename() %>" width="150px" id="pic">
 			</div>
 			
 			<div class="row mt-2">
-				<input type="file" class="form-control" name="file">		
+				<input type="file" class="form-control" name="file" id="file">		
 			</div>
 			<div class="row mt-2">
 				<div class="col text-center">
