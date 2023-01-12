@@ -52,25 +52,27 @@ $(function(){
 					<input type="text" class="form-control" placeholder="Enter title" name="title">
 				</div>
 				<div class="col-md-2">
-					<button type="button" class="btn btn-secondary">등록</button>					
+					<button type="button" class="btn btn-secondary">댓글등록</button>					
 				</div>				
 			</div>
 		</form>	
 			
 		<table class="table">
-		    <thead>
-		      <tr>
-		        <th>Firstname</th>
-		        <th>Lastname</th>
-		        <th>Email</th>
+			<thead>
+				<tr>
+		        <th>댓글메시지</th>
+		        <th>작성자</th>
+		        <th>등록일</th>
 		      </tr>
 		    </thead>
 		    <tbody>
-		      <tr>
-		        <td>John</td>
-		        <td>Doe</td>
-		        <td>john@example.com</td>
-		      </tr>
+		    	<%for(int i=1;i<=5;i++){ %>
+				<tr>
+					<td>John</td>
+			        <td>Doe</td>
+			        <td>john@example.com</td>
+				</tr>
+		      <%} %>
 		    </tbody>
 		</table>			
 	</div>
