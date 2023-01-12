@@ -28,6 +28,16 @@ $(function(){
 	$($("button")[1]).click(function(){//목록버튼
 		$(location).attr("href","/news/list.jsp");
 	});
+	
+	//댓글 등록 버튼 이벤트 연결 
+	$("#form2 button").click(function(){
+		$("#form2").attr({
+			"action":"/comments/regist",
+			"method":"post"
+		});
+		$("#form2").submit();
+	});
+	
 });
 </script>
 </head>
@@ -35,6 +45,7 @@ $(function(){
 	<div class="container mt-3 border">
 		<h2 class="text-center">뉴스기사 상세보기</h2>
 		<form id="form1">
+			<input type="hidden" name="news_idx">
 			<div class="form-group">
 				<input type="text" class="form-control" value="<%=news.getTitle() %>" name="title">
 			</div>
@@ -54,12 +65,14 @@ $(function(){
 		</form>
 		
 		<form id="form2">
+			<input type="hidden" name="news_idx" value="<%=news.getNews_idx()%>">
+			
 			<div class="form-group row">
 				<div class="col-md-6">
-					<input type="text" class="form-control" placeholder="Enter title" name="title">
+					<input type="text" class="form-control" placeholder="Enter title" name="msg">
 				</div>
 				<div class="col-md-4">
-					<input type="text" class="form-control" placeholder="Enter title" name="title">
+					<input type="text" class="form-control" placeholder="Enter title" name="author">
 				</div>
 				<div class="col-md-2">
 					<button type="button" class="btn btn-secondary">댓글등록</button>					

@@ -8,11 +8,11 @@
 	2) mybatis 의 조인 지원 
 	 -->
 	<resultMap id="newsMap" type="News" >
-		<id 			column="news_idx" 	property="news_idx"/>									
+		<id 			column="news_idx" 		property="news_idx"/>									
 		<result 		column="title" 			property="title"/>
 		<result 		column="writer" 		property="writer"/>
-		<result 		column="content" 		property="content"/>
-		<result 		column="regdate" 		property="regdate"/>
+		<result 		column="content" 	property="content"/>
+		<result 		column="regdate" 	property="regdate"/>
 		<result 		column="hit" 			property="hit"/>
 		<collection 
 			column="news_idx"  

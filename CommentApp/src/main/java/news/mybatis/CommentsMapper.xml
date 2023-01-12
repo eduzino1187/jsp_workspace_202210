@@ -7,7 +7,15 @@
 		select * from comments where news_idx=#{news_idx}			
 	</select>
 
+	<!-- 코멘트 한건 넣기 (입력) -->
+	<insert id="insert" parameterType="Comments">
+		insert into comments(comments_idx, msg, author, news_idx)
+		values(seq_comments.nextval, #{msg}, #{author},#{news.news_idx})
+	</insert>
+	
+	
 </mapper>
+
 
 
 

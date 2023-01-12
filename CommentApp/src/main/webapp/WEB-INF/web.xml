@@ -17,6 +17,15 @@
 		<url-pattern>/news/regist</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>insertServlet</servlet-name>
+		<servlet-class>comments.servlet.RegistServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>insertServlet</servlet-name>
+		<url-pattern>/comments/regist</url-pattern>
+	</servlet-mapping>
+	
 	
 	
 </web-app>
