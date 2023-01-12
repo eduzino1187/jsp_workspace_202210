@@ -1,4 +1,14 @@
+<%@page import="news.domain.News"%>
+<%@page import="news.repository.NewsDAO"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%! 
+	NewsDAO newsDAO = new NewsDAO();
+%>
+<%
+	String news_idx = request.getParameter("news_idx");
+	News news=newsDAO.select(Integer.parseInt(news_idx));
+	out.print(news);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,18 +33,18 @@ $(function(){
 </head>
 <body>
 	<div class="container mt-3 border">
-		<h2 class="text-center">뉴스기사 등록</h2>
+		<h2 class="text-center">뉴스기사 상세보기</h2>
 		<form id="form1">
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Enter title" name="title">
+				<input type="text" class="form-control" value="<%=news.getTitle() %>" name="title">
 			</div>
 			
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Enter title" name="writer">
+				<input type="text" class="form-control" value="<%=news.getWriter() %>" name="writer">
 			</div>
 			
 			<div class="form-group">
-				<textarea class="form-control" placeholder="내용입력" name="content"></textarea>
+				<textarea class="form-control" name="content"><%=news.getContent() %></textarea>
 			</div>
 			
 			<div class="form-group text-center">

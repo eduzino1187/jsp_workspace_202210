@@ -49,7 +49,9 @@ $(function(){
 				<%News news=newsList.get(curPos++); %>
 				<tr>
 					<td><%=num-- %></td>
-					<td><%=news.getTitle() %></td>
+					<td>
+						<a href="/news/content.jsp?news_idx=<%=news.getNews_idx()%>"><%=news.getTitle() %></a>
+					</td>
 					<td><%=news.getWriter() %></td>
 					<td><%=news.getRegdate().substring(0,10) %></td>
 					<td><%=news.getHit() %></td>

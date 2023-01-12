@@ -29,7 +29,11 @@ public class NewsDAO {
 	}
 	
 	public News select(int news_idx) {
-		return null;
+		News news=null;
+		SqlSession sqlSession = config.getSqlSession();
+		news=sqlSession.selectOne("News.select", news_idx);
+		config.release(sqlSession);
+		return news;
 	}
 	
 	public int update(News news) {
