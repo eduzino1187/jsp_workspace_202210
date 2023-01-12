@@ -18,6 +18,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%@ include file="/inc/header_link.jsp"%>
+<script type="text/javascript">
+$(function(){
+	$("button").click(function(){
+		location.href="/news/write.jsp";
+	});
+	
+});
+</script>
 </head>
 <body>
 	<div class="container">
