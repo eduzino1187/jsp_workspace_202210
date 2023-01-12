@@ -7,8 +7,15 @@
 <%@ include file="/inc/header_link.jsp"%>
 <script type="text/javascript">
 $(function(){
+	$($("button")[0]).click(function(){ //등록버튼
+		$("#form1").attr({
+			"action":"/news/regist", 
+			"method":"post"
+		});
+		$("#form1").submit();
+	});	
 	
-	$($("button")[1]).click(function(){
+	$($("button")[1]).click(function(){//목록버튼
 		$(location).attr("href","/news/list.jsp");
 	});
 });
@@ -17,7 +24,7 @@ $(function(){
 <body>
 	<div class="container mt-3 border">
 		<h2 class="text-center">뉴스기사 등록</h2>
-		<form>
+		<form id="form1">
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="Enter title" name="title">
 			</div>
