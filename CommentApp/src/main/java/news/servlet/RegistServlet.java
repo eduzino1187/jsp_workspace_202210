@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import news.domain.News;
 import news.repository.NewsDAO;
+import news.util.ResponseMessage;
 
 public class RegistServlet extends HttpServlet{
 	NewsDAO newsDAO;
@@ -35,9 +36,9 @@ public class RegistServlet extends HttpServlet{
 		
 		int result = newsDAO.insert(news);
 		if(result>0) {
-			out.print("등록 처리 서블릿 호출 성공");
+			out.print(ResponseMessage.getMsgURL("등록성공", "/news/list.jsp"));
 		}else {
-			out.print("등록 처리 서블릿 실패");
+			out.print(ResponseMessage.getMsgBack("등록실패"));
 		}
 	}
 }

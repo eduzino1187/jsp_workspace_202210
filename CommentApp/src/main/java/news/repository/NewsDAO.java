@@ -21,7 +21,11 @@ public class NewsDAO {
 	}
 	
 	public List selectAll() {
-		return null;
+		List list=null;
+		SqlSession sqlSession = config.getSqlSession();
+		list=sqlSession.selectList("News.selectAll");
+		config.release(sqlSession);
+		return list;
 	}
 	
 	public News select(int news_idx) {

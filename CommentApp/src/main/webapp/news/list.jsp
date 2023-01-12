@@ -1,15 +1,15 @@
+<%@page import="news.domain.News"%>
+<%@page import="news.repository.NewsDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="news.util.PageManager"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%! PageManager pm=new PageManager(); %>
+<%! 
+	PageManager pm=new PageManager();
+	NewsDAO newsDAO = new NewsDAO();
+%>
 <%
-	List newsList=new ArrayList();
-	newsList.add("사과");
-	newsList.add("딸기");
-	newsList.add("바나나");
-	newsList.add("포도");
-	
+	List<News> newsList=newsDAO.selectAll();
 	pm.init(newsList, request);
 %>
 <!DOCTYPE html>
@@ -46,12 +46,13 @@ $(function(){
 				%>
 				<%for(int i=1;i<=pm.getPageSize();i++){ %>
 				<%if(num<1)break;%>
+				<%News news=newsList.get(curPos++); %>
 				<tr>
 					<td><%=num-- %></td>
-					<td>오늘은 날씨가 화창하겠습니다 [25] </td>
-					<td>김어준</td>
-					<td>john@example.com</td>
-					<td>456</td>
+					<td><%=news.getTitle() %></td>
+					<td><%=news.getWriter() %></td>
+					<td><%=news.getRegdate().substring(0,10) %></td>
+					<td><%=news.getHit() %></td>
 				</tr>
 				<%} %>
 				<tr>
