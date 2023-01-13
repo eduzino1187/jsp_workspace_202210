@@ -22,64 +22,77 @@
 }
 </style>
 <script type="text/javascript">
-function createOption(categoryList){
-	
-	let op="<option value='0'>선택하세요</option>";
-	
-	for(let i=0;i<categoryList.length;i++){
-		let category=categoryList[i]; //
-		op+="<option value='"+category.category_idx+"'>"+category.category_name+"</option>";
-	}
-	$("#category_idx").html(op); //innerHTML
-}
-
 //맛집의 카테고리 가져오기 (비동기 방식으로 데이터만 백그라운드로 가져오기)
 function getCategoryList(){
 	let xhttp=new XMLHttpRequest(); //ajax의 비동기 통신 객체 
-	xhttp.open("GET", "/store/category_list.jsp");
+	xhttp.open("GET", "/store2/category_list.jsp");
 	xhttp.onreadystatechange=function(){
 		if(this.readyState==4 && this.status==200){
 			
 			//문자열에 불과한 데이터를, 파싱하여 실제 JSON 내장객체로 변환
-			let categoryList=JSON.parse(this.responseText);
-			console.log(categoryList);
-			console.log("카테고리 수는 " , categoryList.length);
-			
-			//옵션태그에 반영하기 
-			createOption(categoryList);
+			let jsonList=JSON.parse(this.responseText);
+			//console.log(json.name, json.price);
+			createOptionList(jsonList);
 		}	
 	}
-	
 	xhttp.send();//호스팅 환경인 크롬브라우저가 요청 출발!!
 }
+
+
+function createOptionList(categoryList){
+	$("#category_idx").empty();
+	
+	console.log(categoryList.length);
+	
+	let op ="<option value='0'>선택하세요</option>";
+	for(let i=0;i<categoryList.length;i++){
+		let category = categoryList[i];
+		
+		//기존 옵션 다 지우고, 새로 넣기
+		op+="<option value='"+category.category_idx+"'>"+category.category_name+"</option>";
+	}
+	$("#category_idx").html(op);
+}
+
+function getStoreList(map){
+	
+	for(let i=0;i<5;i++){
+		var marker = new google.maps.Marker({
+			  position:new google.maps.LatLng(51.3+i, -0.120850),
+			  animation:google.maps.Animation.BOUNCE
+		});
+		marker.setMap(map);
+	}
+}
+
+function regist(){
+	let xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "/store2/regist.jsp");
+	
+	let data="lati="+$("input[name='lati']").val();
+	data+="&longi="+$("input[name='longi']").val();
+	data+="&category_idx="+$("select[name='category_idx']").val();
+	data+="&store_name="+$("input[name='store_name']").val();
+	
+	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	
+	xhttp.onreadystatechange=function(){
+		if(this.readyState==4 && this.status==200){
+			alert(this.responseText);		
+		}
+	}
+	xhttp.send(data);
+}
+
 
 function loadMap(){
 	var mapProp= {
 		center:new google.maps.LatLng(51.508742,-0.120850),
 		zoom:5,
 	};
-	var map = new google.maps.Map(document.getElementById("map"),mapProp);
-}
-
-//post 전송 + 비동기 
-//text  : conetnt-type : application/x-www-form-urlencoded
-//binary : cotent-type : multipart/form-data
-function regist(){
-	let xhttp = new XMLHttpRequest();
-	xhttp.open("post", "/store/regist.jsp");
-	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-	let data="lati="+$("input[name='lati']").val();
-	data+="&longi="+$("input[name='longi']").val();
-	data+="&category_idx="+$("#category_idx").val();
-	data+="&store_name="+$("input[name='store_name']").val();
-	//서버와의 통신 상태 체크 
-	xhttp.onreadystatechange=function(){
-		if(this.readyState==4 && this.status==200){
-			console.log("등록결과는", this.responseText);
-		}
-	};
-	xhttp.send(data);
+	let map = new google.maps.Map(document.getElementById("map"),mapProp);
+	
+	getStoreList(map);
 }
 
 $(function(){
@@ -96,23 +109,28 @@ $(function(){
 	<div class="container">
 		<div class="row mt-2">
 			<div class="col-md-2 border">
-				<div class="form-group mt-2">
-					<input class="form-control" placeholder="위도" name="lati">
-				</div>
-				<div class="form-group mt-2">
-					<input class="form-control" placeholder="경도" name="longi">
-				</div>
-				<div class="form-group mt-2">
-					<select class="form-control" id="category_idx"></select>
-				</div>
-				<div class="form-group mt-2">
-					<input class="form-control" placeholder="상호명" name="store_name">
-				</div>
+				
+				<form id="form1">
+					<div class="form-group mt-2">
+						<input class="form-control" placeholder="위도" name="lati">
+					</div>
+					<div class="form-group mt-2">
+						<input class="form-control" placeholder="경도" name="longi">
+					</div>
+					<div class="form-group mt-2">
+						<select class="form-control" id="category_idx" name="category_idx">
+							<option>선택하세요</option>
+						</select>
+					</div>
+					<div class="form-group mt-2">
+						<input class="form-control" placeholder="상호명" name="store_name">
+					</div>
+				</form>
 				<div class="form-group mt-2">
 					<button id="bt_regist" type="button" class="form-control">맛집등록</button>
 				</div>
 				<!-- 맛집 목록  -->
-				<div style="overflow:scroll">
+				<div class="row p-3" style="overflow:scroll">
 					<table class="table">
 						<thead class="thead-dark">
 							<tr>
