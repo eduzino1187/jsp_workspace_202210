@@ -59,21 +59,40 @@ function loadMap(){
 		zoom:5,
 	};
 	var map = new google.maps.Map(document.getElementById("map"),mapProp);
+	
+	getStoreList(map);
+}
+
+//마커 생성하기 
+function createMarker(map, storeList){
+	//맛집 수만큼 마커를 생성하자!!
+	for(let i=0;i<storeList.length;i++){//json 배열..
+		let store = storeList[i]; //맛집 하나 추출 
+	
+		var mapProp= {
+			center:new google.maps.LatLng(store.lati , store.longi),
+			zoom:15,
+		};	
+		
+		var marker = new google.maps.Marker({position: mapProp.center});
+		marker.setMap(map);
+	}
 }
 
 //모든 맛집 리스트 가져오기 위한 비동기 요청
-function getStoreList(){
+function getStoreList(map){
 	let xhttp = new XMLHttpRequest();
 	xhttp.open("get", "/store/store_list.jsp");
 	xhttp.onreadystatechange=function(){
 		if(this.readyState==4 && this.status==200){
 			//서버에서 가져온 json 목록을 이용하여 지도에 마커표시!!
 			console.log(this.responseText);
+			let jsonList=JSON.parse(this.responseText);
 			
-			//createMarker();
+			createMarker(map, jsonList);
 		}
 	};
-	xhtt.send();
+	xhttp.send();
 }
 
 //post 전송 + 비동기 
@@ -104,7 +123,8 @@ $(function(){
 		regist();
 	});	
 	
-	getCategoryList();
+	getCategoryList(); //카테고리 리스트
+	getStoreList(); //맛집 리스트
 });
 
 </script>
