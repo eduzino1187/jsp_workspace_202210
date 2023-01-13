@@ -6,7 +6,7 @@
 		select category_idx, category_name from category
 	</select>
 	
-	<select id="select" parameterType="int">
+	<select id="select" resultType="Category" parameterType="int">
 		select * from category 
 		where category_idx=#{category_idx}
 	</select>	

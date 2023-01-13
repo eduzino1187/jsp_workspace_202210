@@ -61,6 +61,21 @@ function loadMap(){
 	var map = new google.maps.Map(document.getElementById("map"),mapProp);
 }
 
+//모든 맛집 리스트 가져오기 위한 비동기 요청
+function getStoreList(){
+	let xhttp = new XMLHttpRequest();
+	xhttp.open("get", "/store/store_list.jsp");
+	xhttp.onreadystatechange=function(){
+		if(this.readyState==4 && this.status==200){
+			//서버에서 가져온 json 목록을 이용하여 지도에 마커표시!!
+			console.log(this.responseText);
+			
+			//createMarker();
+		}
+	};
+	xhtt.send();
+}
+
 //post 전송 + 비동기 
 //text  : conetnt-type : application/x-www-form-urlencoded
 //binary : cotent-type : multipart/form-data
@@ -77,6 +92,8 @@ function regist(){
 	xhttp.onreadystatechange=function(){
 		if(this.readyState==4 && this.status==200){
 			console.log("등록결과는", this.responseText);
+			//모든 상점 가져오기
+			getStoreList(); //목록 가져오기 비동기 요청!!
 		}
 	};
 	xhttp.send(data);

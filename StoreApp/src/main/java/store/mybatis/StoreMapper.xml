@@ -15,7 +15,7 @@
 			select="Category.select"/>						
 	</resultMap>
 	
-	<select id="selectAll" resultType="Store">
+	<select id="selectAll" resultMap="storeMap">
 		select store_idx, lati, longi, store_name
 		, category_idx from store
 	</select>	
