@@ -22,6 +22,8 @@
 }
 </style>
 <script type="text/javascript">
+let map;
+
 function createOption(categoryList){
 	
 	let op="<option value='0'>선택하세요</option>";
@@ -55,10 +57,10 @@ function getCategoryList(){
 
 function loadMap(){
 	var mapProp= {
-		center:new google.maps.LatLng(51.508742,-0.120850),
-		zoom:5,
+		center:new google.maps.LatLng(37.5587939,126.9396418),
+		zoom:15,
 	};
-	var map = new google.maps.Map(document.getElementById("map"),mapProp);
+	map = new google.maps.Map(document.getElementById("map"),mapProp);
 	
 	getStoreList(map);
 }
@@ -112,7 +114,7 @@ function regist(){
 		if(this.readyState==4 && this.status==200){
 			console.log("등록결과는", this.responseText);
 			//모든 상점 가져오기
-			getStoreList(); //목록 가져오기 비동기 요청!!
+			getStoreList(map); //목록 가져오기 비동기 요청!!
 		}
 	};
 	xhttp.send(data);
