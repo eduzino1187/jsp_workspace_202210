@@ -85,7 +85,10 @@ function getEmpListBySearch(){
 	
 	$.ajax({
 		url:"/emp/emp_search.jsp?category="+category+"&keyword="+keyword,
-		type:"get"
+		type:"get", 
+		success:function(result, status, xhr){
+			createEmpTable(JSON.parse(result));
+		}
 	});
 	
 }
