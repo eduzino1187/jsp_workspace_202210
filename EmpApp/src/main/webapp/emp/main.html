@@ -43,12 +43,36 @@ function getDeptList(){
 	});
 }
 
+function createEmpTable(empList){
+	let tag="";
+	
+	for(let i=0;i<empList.length;i++){
+		let emp=empList[i]; //사원한명 꺼내기 
+		
+		tag+="<tr>";
+		tag+="<td>"+emp.empno+"</td>";
+		tag+="<td>"+emp.ename+"</td>";
+		tag+="<td>"+emp.job+"</td>";
+		tag+="<td>"+emp.mgr+"</td>";
+		tag+="<td>"+emp.hiredate.substring(0,10)+"</td>";
+		tag+="<td>"+emp.sal+"</td>";
+		tag+="<td>"+emp.comm+"</td>";
+		tag+="<td>"+emp.deptno+"</td>";
+		tag+="</tr>";
+	}
+	$("#tbody").html(tag);
+}
+
 function getEmpList(){
+	let deptno=$("#deptno").val();// 유저가 선택한 부서번호
+	
 	$.ajax({
-		"url":"/emp/emp_list.jsp",
+		"url":"/emp/emp_list.jsp?deptno="+deptno,
 		"type":"get",
 		success:function(result, stauts, xhr){
 			console.log("서버의 사원목록 is ", result);
+			
+			createEmpTable(JSON.parse(result));
 		} 
 	});
 }
