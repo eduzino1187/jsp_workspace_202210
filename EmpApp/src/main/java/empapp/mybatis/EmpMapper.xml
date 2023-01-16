@@ -7,6 +7,13 @@
 		select * from emp where deptno=#{deptno}
 	</select>
 	
+	<!-- 사원검색  -->
+	<select id="selectBySearch" resultType="Emp" 
+		parameterType="java.util.Map">
+		select * from emp 
+		where  ${category} like  '%${keyword}%'
+	</select>
+	
 </mapper>
 
 
