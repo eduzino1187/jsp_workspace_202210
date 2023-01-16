@@ -77,12 +77,29 @@ function getEmpList(){
 	});
 }
 
+
+//검색 기능에 의한 사원들 가져오기
+function getEmpListBySearch(){
+	let category=$("#category").val(); //select box 값
+	let keyword=$("#keyword").val(); //input 값
+	
+	$.ajax({
+		url:"/emp/emp_search.jsp?category="+category+"&keyword="+keyword,
+		type:"get"
+	});
+	
+}
+
 $(function(){
 	getDeptList(); //부서 불러오기	
 	
 	//부서중 하나를 선택하면...하위 사원들 출력 
 	$("#deptno").change(function(){
 		getEmpList();
+	});
+	
+	$("#bt_search").click(function(){
+		getEmpListBySearch();
 	});
 });
 </script>
@@ -96,23 +113,46 @@ $(function(){
 				</div>
 			</div>		
 			<div class="col-md-9">
-				<table class="table">
-					<thead class="thead-dark">
-						<tr>
-							<th>EMPNO</th>
-							<th>ENAME</th>
-							<th>JOB</th>
-							<th>MGR</th>
-							<th>HIREDATE</th>
-							<th>SAL</th>
-							<th>COMM</th>
-							<th>DEPTNO</th>
-						</tr>
-					</thead>
-					<tbody id="tbody">
-					</tbody>
-				</table>				
-			
+				<div class="row m-1">
+					<div class="col-md-3">
+						<div class="form-group">
+							<select class="form-control" id="category">
+								<option value="empno">사원번호</option>
+								<option value="ename">사원명</option>
+								<option value="job">업무</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<div class="form-group">
+							<input type="text" class="form-control" id="keyword">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<button type="button" class="btn btn-primary" id="bt_search">검색</button>
+						</div>
+					</div>
+				</div>
+					
+				<div class="row">
+					<table class="table">
+						<thead class="thead-dark">
+							<tr>
+								<th>EMPNO</th>
+								<th>ENAME</th>
+								<th>JOB</th>
+								<th>MGR</th>
+								<th>HIREDATE</th>
+								<th>SAL</th>
+								<th>COMM</th>
+								<th>DEPTNO</th>
+							</tr>
+						</thead>
+						<tbody id="tbody">
+						</tbody>
+					</table>				
+				</div>
 			</div>		
 		</div>
 	</div>
