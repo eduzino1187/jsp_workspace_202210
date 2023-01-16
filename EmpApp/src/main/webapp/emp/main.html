@@ -29,7 +29,6 @@ function createDeptOption(deptList){
 }
 
 function getDeptList(){
-	alert();
 	$.ajax({
 		"type":"get",
 		"url":"/emp/dept_list.jsp",
@@ -37,15 +36,30 @@ function getDeptList(){
 			//result : 서버의 응답 텍스트 
 			//status :  서버의 응답  http 코드
 			//xhr : XMLHttpRequest  객체
-			console.log("result is ", result);
+			//console.log("result is ", result);
 			let deptList = JSON.parse(result);//문자열을 JSON으로
 			createDeptOption(deptList);//부서옵션 만들기
 		}
 	});
 }
 
+function getEmpList(){
+	$.ajax({
+		"url":"/emp/emp_list.jsp",
+		"type":"get",
+		success:function(result, stauts, xhr){
+			console.log("서버의 사원목록 is ", result);
+		} 
+	});
+}
+
 $(function(){
 	getDeptList(); //부서 불러오기	
+	
+	//부서중 하나를 선택하면...하위 사원들 출력 
+	$("#deptno").change(function(){
+		getEmpList();
+	});
 });
 </script>
 </head>
