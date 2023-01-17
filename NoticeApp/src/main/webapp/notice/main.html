@@ -23,7 +23,9 @@
 		return(
  			<tr>
                 <td>No</td>
-                <td>{props.notice.title}</td>
+                <td>
+					<a href="#" onClick={()=>getDetail(props.notice)}>{props.notice.title}</a>
+				</td>
                 <td>{props.notice.writer}</td>
                 <td>{props.notice.regdate}</td>
             	<td>{props.notice.hit}</td>
@@ -46,6 +48,13 @@
 
 </script>
 <script type="text/javascript">
+function getDetail(notice){ //한건 넘겨받기
+	//화면 우측에 출력 
+	$("#form2 input[name='title']").val(notice.title);
+	$("#form2 input[name='writer']").val(notice.writer);
+	$("#form2 textarea[name='content']").val(notice.content);
+}
+
 function getList(){
 	$.ajax({
 		url:"/notice/list.jsp",
@@ -56,6 +65,7 @@ function getList(){
 			//1)서버가 string으로 보낸 경우 클라이언트인 js에서 변환 
 			//2)아예, 서버에서  json으로 보내는 방법
 			printRow(result);
+			
 		}
 	});	
 }
