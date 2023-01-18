@@ -49,7 +49,7 @@
 			<!-- Main content -->
 			<section class="content">
 				<div class="container-fluid">
-					<div class="col-md-6">
+					<div class="col">
 						
 						<div class="form-group">
 	                    	<select class="form-control">
@@ -63,13 +63,31 @@
 	                    	<input type="email" class="form-control" placeholder="브랜드">
 	                  	</div>
 						<div class="form-group">
-	                    	<input type="email" class="form-control" placeholder="가격">
+	                    	<input type="number" class="form-control" placeholder="가격">
 	                  	</div>
 						<div class="form-group">
-	                    	<input type="email" class="form-control" placeholder="할인가">
+	                    	<input type="number" class="form-control" placeholder="할인가">
 	                  	</div>
 						<div class="form-group">
 	                    	<textarea id="detail" class="form-control" ></textarea>
+	                  	</div>
+						<div class="form-group">
+	                    	<input type="file" class="form-control" />
+	                  	</div>
+						<div class="form-group">
+	                    	<input type="file" class="form-control" />
+	                  	</div>
+						<div class="form-group">
+	                    	<input type="file" class="form-control" />
+	                  	</div>
+						<div class="form-group">
+	                    	<input type="file" class="form-control" />
+	                  	</div>
+						<div class="form-group">
+	                    	<input type="file" class="form-control" />
+	                  	</div>
+						<div class="form-group">
+	                    	<button type="button" class="btn btn-primary">등록</button>
 	                  	</div>
 	                  	
 					</div>					
