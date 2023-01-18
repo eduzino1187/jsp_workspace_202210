@@ -50,6 +50,10 @@ function previewImage(files){
 		
 		reader.onload=function(e){
 			tag.push(<ImageBox src={e.target.result} />);
+
+			if(tag.length>=files.length){
+				preview.render(tag);
+			}
 		};
 		reader.readAsDataURL(files[i]);
 	}

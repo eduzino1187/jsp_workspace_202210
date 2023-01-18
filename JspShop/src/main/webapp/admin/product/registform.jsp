@@ -49,7 +49,30 @@
 			<!-- Main content -->
 			<section class="content">
 				<div class="container-fluid">
-					컨텐츠 올곳
+					<div class="col-md-6">
+						
+						<div class="form-group">
+	                    	<select class="form-control">
+	                    		<option value="0">카테고리 선택</option>
+	                    	</select>
+	                  	</div>
+						<div class="form-group">
+	                    	<input type="email" class="form-control" placeholder="상품명">
+	                  	</div>
+						<div class="form-group">
+	                    	<input type="email" class="form-control" placeholder="브랜드">
+	                  	</div>
+						<div class="form-group">
+	                    	<input type="email" class="form-control" placeholder="가격">
+	                  	</div>
+						<div class="form-group">
+	                    	<input type="email" class="form-control" placeholder="할인가">
+	                  	</div>
+						<div class="form-group">
+	                    	<textarea id="detail" class="form-control" ></textarea>
+	                  	</div>
+	                  	
+					</div>					
 				</div>
 				<!-- /.container-fluid -->
 			</section>
@@ -65,6 +88,13 @@
 	</div>
 	<!-- ./wrapper -->
 	<%@ include file="/admin/inc/footer_link.jsp" %>
+	<script type="text/javascript">
+		$(function(){
+			$("#detail").summernote({
+				height:200
+			});			
+		});		
+	</script>
 </body>
 </html>
 
