@@ -1,22 +1,14 @@
+<%@page import="repository.NoticeDAO"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="domain.Notice"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page contentType="application/json;charset=UTF-8"%>
+<%!
+	NoticeDAO noticeDAO = new NoticeDAO();
+%>
 <%
-	
-	List<Notice> noticeList=new ArrayList();
-	
-	for(int i=0;i<10;i++){
-		Notice notice=new Notice();
-		notice.setNotice_idx(i);
-		notice.setTitle("줄넘기"+i+"회");
-		notice.setWriter("작성자"+i);
-		notice.setRegdate("2023-01"+i);
-		notice.setHit(i);
-	
-		noticeList.add(notice);
-	}
+	List<Notice> noticeList=noticeDAO.selectAll();
 	
 	Gson gson = new Gson();
 	String jsonList=gson.toJson(noticeList);
