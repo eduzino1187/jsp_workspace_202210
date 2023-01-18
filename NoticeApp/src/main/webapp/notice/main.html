@@ -42,14 +42,16 @@
 			tag.push(<Row key={i} notice={json} />);	
 		}
 		//루트에 렌더링 
-		let root=ReactDOM.createRoot( document.getElementById("root"));
+		
 		root.render(tag);
 	};
 
 </script>
 <script type="text/javascript">
+let root;
 function getDetail(notice){ //한건 넘겨받기
 	//화면 우측에 출력 
+	$("#form2 input[name='notice_idx']").val(notice.notice_idx);
 	$("#form2 input[name='title']").val(notice.title);
 	$("#form2 input[name='writer']").val(notice.writer);
 	$("#form2 textarea[name='content']").val(notice.content);
@@ -84,13 +86,40 @@ function regist(){
 			
 			if(result==1){
 				console.log("등록성공");
+				getList();
 			}
 		}	 
 	});	
 	
 }
 
+function edit(){
+	if(!confirm("수정하시겠어요?")){
+		return;
+	}
+	
+	//비동기방식으로도 form 자체를 전송할 수 있다. 
+	let postData=$("#form2").serialize(); 
+	//폼의 파라미터와 그 값을 쿼리스트링 title=3&writer=배트맨&content=aa
+	
+	console.log(postData);
+	
+	$.ajax({
+		url:"/notice/edit.jsp",
+		type:"post",
+		data:postData, 
+		success:function(result,status, xhr){
+			if(result==1){
+				console.log("수정성공");
+				getList();
+			}
+		}
+	});	
+}
+
 $(function(){
+	root=ReactDOM.createRoot( document.getElementById("root"));
+	
 	getList();
 	
 	//등록버튼과 이벤트연결 
@@ -145,6 +174,8 @@ $(function(){
 			</div>
 			<div class="col-md-2">
 				<form id="form2">
+					<input type="hidden" name="notice_idx">
+					
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Enter title" name="title">
 					</div>
