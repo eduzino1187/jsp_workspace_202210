@@ -39,8 +39,11 @@
 			<ul class="nav nav-pills nav-sidebar flex-column"
 				data-widget="treeview" role="menu" data-accordion="false">
 				<!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-				<li class="nav-item menu-open"><a href="#"
+               with font-awesome or any other icon font library
+                
+               nav-item menu-open : 메뉴 열려있게..
+               -->
+				<li class="nav-item"><a href="#"
 					class="nav-link active"> <i
 						class="nav-icon fas fa-tachometer-alt"></i>
 						<p>
@@ -60,13 +63,33 @@
 								<i class="far fa-circle nav-icon"></i>
 								<p>Dashboard v3</p>
 						</a></li>
-					</ul>
-				</li>
-				<li class="nav-item menu-open"><a href="#"
+					</ul></li>
+					
+					
+				<li class="nav-item"><a href="#" class="nav-link active">
+						<i class="nav-icon fas fa-tachometer-alt"></i>
+						<p>
+							상품관리 <i class="right fas fa-angle-left"></i>
+						</p>
+				</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item"><a href="/admin/product/registform.jsp"
+							class="nav-link"> <i class="far fa-circle nav-icon"></i>
+								<p>상품등록</p>
+						</a></li>
+						<li class="nav-item"><a href="./index2.html" class="nav-link">
+								<i class="far fa-circle nav-icon"></i>
+								<p>일괄등록</p>
+						</a></li>
+						
+					</ul></li>
+
+
+				<li class="nav-item"><a href="#"
 					class="nav-link active"> <i
 						class="nav-icon fas fa-tachometer-alt"></i>
 						<p>
-							상점관리 <i class="right fas fa-angle-left"></i>
+							회원관리 <i class="right fas fa-angle-left"></i>
 						</p>
 				</a>
 					<ul class="nav nav-treeview">
@@ -82,14 +105,13 @@
 								<i class="far fa-circle nav-icon"></i>
 								<p>Dashboard v3</p>
 						</a></li>
-					</ul>
-				</li>
-			
-				<li class="nav-item menu-open"><a href="#"
+					</ul></li>
+
+				<li class="nav-item"><a href="#"
 					class="nav-link active"> <i
 						class="nav-icon fas fa-tachometer-alt"></i>
 						<p>
-							상점관리 <i class="right fas fa-angle-left"></i>
+							주문관리 <i class="right fas fa-angle-left"></i>
 						</p>
 				</a>
 					<ul class="nav nav-treeview">
@@ -105,14 +127,13 @@
 								<i class="far fa-circle nav-icon"></i>
 								<p>Dashboard v3</p>
 						</a></li>
-					</ul>
-				</li>
-			
-				<li class="nav-item menu-open"><a href="#"
+					</ul></li>
+
+				<li class="nav-item"><a href="#"
 					class="nav-link active"> <i
 						class="nav-icon fas fa-tachometer-alt"></i>
 						<p>
-							상점관리 <i class="right fas fa-angle-left"></i>
+							통계관리 <i class="right fas fa-angle-left"></i>
 						</p>
 				</a>
 					<ul class="nav nav-treeview">
@@ -128,14 +149,14 @@
 								<i class="far fa-circle nav-icon"></i>
 								<p>Dashboard v3</p>
 						</a></li>
-					</ul>
-				</li>
-			
-				<li class="nav-item menu-open"><a href="#"
+					</ul></li>
+
+
+				<li class="nav-item"><a href="#"
 					class="nav-link active"> <i
 						class="nav-icon fas fa-tachometer-alt"></i>
 						<p>
-							상점관리 <i class="right fas fa-angle-left"></i>
+							고객센터 <i class="right fas fa-angle-left"></i>
 						</p>
 				</a>
 					<ul class="nav nav-treeview">
@@ -151,10 +172,9 @@
 								<i class="far fa-circle nav-icon"></i>
 								<p>Dashboard v3</p>
 						</a></li>
-					</ul>
-				</li>
-			
-			
+					</ul></li>
+
+
 			</ul>
 		</nav>
 		<!-- /.sidebar-menu -->
