@@ -37,23 +37,19 @@ function ImageBox(props){
 	);
 };
 
-function printPreview(path){	
-	alert(path);
-	preview.render( <ImageBox src={path} />);
-	
-} 
 </script>
 
-<script type="text/javascript">
+<script type="text/babel">
 let preview;
 
 function previewImage(files){
+	let tag=[];
 	
 	for(let i=0;i<files.length;i++){
 		let reader = new FileReader();
 		
 		reader.onload=function(e){
-			printPreview(e.target.result);
+			tag.push(<ImageBox src={e.target.result} />);
 		};
 		reader.readAsDataURL(files[i]);
 	}

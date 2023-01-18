@@ -4,3 +4,49 @@ create table  admin(
   , admin_pass   varchar(20)
   , admin_name  varchar(20)
 ) default  character set  utf8;
+
+create table category(
+    category_idx  int primary key auto_increment
+  , category_name  varchar(30)
+) default  character set  utf8;
+
+create table product(
+	product_idx int primary key auto_increment	
+	, category_idx int 	
+	, product_name varchar(30)	
+	, brand varchar(100)	
+	, price int default 0 	
+	, discount int default 0 	
+	, detail  text 
+	, constraint  fk_category_product  foreign key (category_idx)
+      references  category(category_idx)
+) default  character set  utf8;
+
+create  table color(
+      color_idx  int  primary key auto_increment
+    , product_idx  int   
+    , color_name  varchar(20)
+    , constraint  fk_product_color  foreign key(product_idx)
+         refereneces  product(product_idx)
+) default  character set  utf8;
+
+create  table  psize(
+   psize_idx  int  primary key auto_increment
+ , product_idx  int       
+ , psize_name  varchar(20)
+ , constraint  fk_product_psize  foreign key(product_idx)
+        refereneces  product(product_idx)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
