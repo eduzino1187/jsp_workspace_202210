@@ -70,8 +70,40 @@ function getList(){
 	});	
 }
 
+function regist(){
+	$.ajax({
+		url:"/notice/regist.jsp",
+		type:"post",
+		data:{
+			"title":$("#form1 input[name='title']").val(),	
+			"writer":$("#form1 input[name='writer']").val(),	
+			"content":$("#form1 textarea[name='content']").val()	
+		}, 
+		success:function(result, status, xhr){
+			console.log("등록결과", result);
+			
+			if(result==1){
+				console.log("등록성공");
+			}
+		}	 
+	});	
+	
+}
+
 $(function(){
 	getList();
+	
+	//등록버튼과 이벤트연결 
+	$("#bt_regist").click(function(){
+		regist();
+	});
+	$("#bt_edit").click(function(){
+		edit();
+	});
+	$("#bt_del").click(function(){
+		del();
+	});
+	
 });
 </script>
 
@@ -91,7 +123,7 @@ $(function(){
 						<textarea class="form-control" placeholder="Enter content" name="content"></textarea>
 					</div>
 					<div class="form-group">
-						<button type="button" class="btn btn-primary">등록</button>
+						<button type="button" class="btn btn-primary" id="bt_regist">등록</button>
 					</div>
 										
 				</form>
@@ -123,7 +155,8 @@ $(function(){
 						<textarea class="form-control" placeholder="Enter content" name="content"></textarea>
 					</div>
 					<div class="form-group">
-						<button type="button" class="btn btn-primary">등록</button>
+						<button type="button" class="btn btn-primary" id="bt_edit">수정</button>
+						<button type="button" class="btn btn-primary" id="bt_del">삭제</button>
 					</div>
 										
 				</form>
