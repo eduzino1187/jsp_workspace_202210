@@ -117,6 +117,21 @@ function edit(){
 	});	
 }
 
+function del(){
+	if(!confirm("삭제하시겠어요?")){
+		return;
+	}
+	$.ajax({
+		url:"/notice/delete.jsp?notice_idx="+$("#form2 input[name='notice_idx']").val(),
+		type:"get",
+		success:function(result, status, xhr){
+			if(result==1){
+				getList();
+			}
+		}
+	});
+}
+
 $(function(){
 	root=ReactDOM.createRoot( document.getElementById("root"));
 	
