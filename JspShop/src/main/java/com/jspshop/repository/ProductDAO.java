@@ -17,7 +17,7 @@ public class ProductDAO {
 		int result=0;
 		result=sqlSession.insert("Product.insert", product);		
 		if(result<1) {
-			//에러를 일부러 일으키자!!\
+			//에러를 일부러 일으키자!!
 			throw new ProductException("상품이 등록되지 않았어요");
 		}
 		return result;

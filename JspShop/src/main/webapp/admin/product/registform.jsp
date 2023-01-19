@@ -159,6 +159,7 @@
 			formData.append("discount", $("#discount").val());
 			formData.append("detail", $("#detail").val());
 			
+			
 			for(let i=0;i<fileList.length;i++){
 				let file = fileList[i];
 				formData.append("file", file);
@@ -267,8 +268,10 @@
 				//this.files는 이미 자바스크립트의 파일배열로써, 읽기만 가능하다
 				//따라서 수정가능한 배열이 되려면, this.files 안에 있는 File들을
 				//꺼내서, 일반배열로 옮겨 버리면 된다..
- 				for(let i=0;i<this.files.length;i++){
-					fileList.push(this.files[i]);
+				fileList=[];
+
+ 				for(let i=0;i<oriFiles.length;i++){
+					fileList.push(oriFiles[i]);
 				}
 				previewImg();
 			});

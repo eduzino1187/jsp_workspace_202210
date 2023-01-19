@@ -64,22 +64,13 @@
 	//psizeDAO.setSqlSession(sqlSession);
 
 	//DAO 에게 일시키기
-	/*
-	try{
-		productDAO.insert(null);
+
+		int result = productDAO.insert(null);
 		colorDAO.insert(null);
 		psizeDAO.insert(null);
-		sqlSession.commit();
-	}catch(ProductException e){
-		sqlSession.rollback();
-	}catch(ColorException e){
-		sqlSession.rollback();
-	}catch(PsizeException e){
-		sqlSession.rollback();
-	}finally{
-		mybatisConfig.release(sqlSession);	
-	}
-	*/
+		
+
+	
 %>
 
 
