@@ -1,9 +1,6 @@
 <%@page import="com.jspshop.domain.Admin"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%
-	String[] sizeList={"XS","S","M","L","XL","XXL"};
-	String[] colorList={"베이지","네이비","브라운","블랙"};
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,7 +53,9 @@
 					<div class="col">
 						
 						<div class="form-group">
-	                    	<select class="form-control" id="category"></select>
+	                    	<select class="form-control">
+	                    		<option value="0">카테고리 선택</option>
+	                    	</select>
 	                  	</div>
 						<div class="form-group">
 	                    	<input type="email" class="form-control" placeholder="상품명">
@@ -70,34 +69,28 @@
 						<div class="form-group">
 	                    	<input type="number" class="form-control" placeholder="할인가">
 	                  	</div>
-	                  	
-						<div class="form-group">
-							<%for(int i=0;i<sizeList.length;i++){ %>
-						    <div class="icheck-primary d-inline">
-						        <input type="checkbox" id="checkboxPrimary<%=i%>" name="size" value="<%=sizeList[i]%>">
-						        <label for="checkboxPrimary<%=i%>"><%=sizeList[i]%></label>
-						    </div>
-							<%} %>
-	                  	</div>
-	                  	
-						<div class="form-group">
-							<%for(int i=0;i<colorList.length;i++){ %>
-						    <div class="icheck-primary d-inline">
-						        <input type="checkbox" id="color<%=i%>" name="size" value="<%=colorList[i]%>">
-						        <label for="color<%=i%>"><%=colorList[i]%></label>
-						    </div>
-							<%} %>
-	                  	</div>
-	                  	
 						<div class="form-group">
 	                    	<textarea id="detail" class="form-control" ></textarea>
 	                  	</div>
-						<div class="form-group">
-	                    	<input type="file" class="form-control" multiple  id="file"/>
+	                  	
+                        <div class="form-group">
+	                        <div class="custom-file">
+	                            <!--파일박스는 실제 보여지지 않음 -->
+	                            <input type="file" class="custom-file-input" id="file" multiple>
+	                            
+	                            <!--아래의 라벨은 파일박스처럼 생김 -->
+	                            <!-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> -->
+	                        </div>
+	                        <span class="btn btn-success col-12 fileinput-button" onClick="triggerFile()">
+	                            <i class="fas fa-plus"></i>
+	                            <span>Add files</span>
+	                        </span>
+                        </div>
+
+	                  	<div class="row form-group" id="preview">
+	                  		미리보기 영역
 	                  	</div>
-	                  	
-	                  	<div class="row form-group" id="preview"></div>
-	                  	
+                        
 						<div class="form-group">
 	                    	<button type="button" class="btn btn-primary">등록</button>
 	                  	</div>
@@ -132,56 +125,32 @@
 	</script>
 	
 	<script type="text/babel">
-		let tag=[];   // <ImageBox/> UI 컴포넌트를 누적할 배열
-		let previewRoot; //리엑트에 의해 렌더링될 컨테이너 요소		
-		let fileList=[]; //파일정보를 가진 배열 
+		let tag=[];
+		let previewRoot;
+		let fileList=[];
 
-		function removeImg(e){
-			//시각적인 삭제 처리
-			$(e.target).parent().parent().remove();
-			
-			//배열에서의 삭제 
-			fileList.splice(  , 1);
+		function removeImg(a, index){
+			console.log(a, index);
+			fileList.splice(index, 1);
+
+			$(a.target).parent().parent().remove();
+
 		}
 
-		function createCategoryOption(result){
-			console.log(result);
-			let op="<option value='0'>상품분류</option>";
-			
-			for(let i=0; i<result.length;i++){ //json 배열만큼 반복
-				
-				let category=result[i];//카테고리 하나 꺼내기
-				op+="<option value='"+category.category_idx+"'>"+category.cateogry_name+"</option>";
-			}
-			$("#category").html(op);								
-		}
-		
-		function getCategoryList(){
-			$.ajax({
-				url:"/admin/category/category_list.jsp",
-				type:"GET",
-				success:function(result, status, xhr){
-					//옵션 채우기 
-					createCategoryOption(result);
-				}
-			});					
-		}
-		
 		//사용자가 선택한 파일들을 매개변수로 받자!
-		function previewImg(){ //3개
-			tag=[];
-
+		function previewImg(){
+			
 			for(let i=0;i<fileList.length;i++){
 				let reader = new FileReader();
 				
 				reader.onload=function(e){ //파일이 읽혀지면..
 					//e에는 읽은 파일에 대한 정보가 들어있다...
-					tag.push( <ImageBox key={i} src={e.target.result} index={i}/>);
-
-					if(i >= fileList.length-1){ //마지막 이미지에 도달하면...					
-						previewRoot.render(tag);
+					tag.push( <ImageBox key={i} src={e.target.result} index={i} />);
+				
+					if(tag.length >= fileList.length){
+						previewRoot.render(tag);		
 					}
-
+					
 				};
 				reader.readAsDataURL( fileList[i]);//읽을 대상 파일
 			}			
@@ -189,27 +158,28 @@
 		
 		$(function(){
 			previewRoot = ReactDOM.createRoot(document.getElementById("preview"));
-			getCategoryList();
 			
 			$("#detail").summernote({
 				height:200
-			});	
+			});
 			
 			$("#file").change(function(){
-				//this.files; //파일컴포넌트에서 선택한 파일의 보유한 배열 
+				this.files; //파일컴포넌트에서 선택한 파일의 보유한 배열 
 							//이 배열은 read only
 				console.log("당신이 선택한 파일 수는 ", this.files.length);
 
-				//this.files는 이미 자바스크립트의 파일배열로써, 읽기만 가능하다
-				//따라서 수정가능한 배열이 되려면, this.files 안에 있는 File들을
-				//꺼내서, 일반배열로 옮겨 버리면 된다..
- 				for(let i=0;i<this.files.length;i++){
+				for(let i=0;i<this.files.length;i++){
 					fileList.push(this.files[i]);
 				}
+
 				previewImg();
 			});
-			
-		});		
+		});
+		
+		function triggerFile(){
+			$("#file").trigger("click");
+		}
+		
 	</script>
 </body>
 </html>
