@@ -135,13 +135,19 @@
 		let tag=[];   // <ImageBox/> UI 컴포넌트를 누적할 배열
 		let previewRoot; //리엑트에 의해 렌더링될 컨테이너 요소		
 		let fileList=[]; //파일정보를 가진 배열 
+		let oriFiles; //원래 유저가 선택한 파일배열 원본
 
-		function removeImg(e){
+		function removeImg(e, index){
 			//시각적인 삭제 처리
 			$(e.target).parent().parent().remove();
 			
-			//배열에서의 삭제 
-			fileList.splice(  , 1);
+			//원본 배열에서, 해당 파일을 추출한다
+			let file=oriFiles[index];
+
+			//추출한 파일이 삭제정보 배열에서 몇번째 index인지 조사한다
+			let sel_index = fileList.indexOf(file); 
+
+			fileList.splice( sel_index , 1);
 		}
 
 		function createCategoryOption(result){
@@ -199,6 +205,7 @@
 				//this.files; //파일컴포넌트에서 선택한 파일의 보유한 배열 
 							//이 배열은 read only
 				console.log("당신이 선택한 파일 수는 ", this.files.length);
+				oriFiles=this.files;
 
 				//this.files는 이미 자바스크립트의 파일배열로써, 읽기만 가능하다
 				//따라서 수정가능한 배열이 되려면, this.files 안에 있는 File들을
