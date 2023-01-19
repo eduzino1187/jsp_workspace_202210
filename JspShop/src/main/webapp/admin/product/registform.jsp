@@ -54,21 +54,21 @@
 			<section class="content">
 				<div class="container-fluid">
 					<div class="col">
-						
+						<form id="form1">
 						<div class="form-group">
 	                    	<select class="form-control" id="category"></select>
 	                  	</div>
 						<div class="form-group">
-	                    	<input type="email" class="form-control" placeholder="상품명">
+	                    	<input type="text" class="form-control" id="product_name" placeholder="상품명">
 	                  	</div>
 						<div class="form-group">
-	                    	<input type="email" class="form-control" placeholder="브랜드">
+	                    	<input type="text" class="form-control" id="brand" placeholder="브랜드">
 	                  	</div>
 						<div class="form-group">
-	                    	<input type="number" class="form-control" placeholder="가격">
+	                    	<input type="number" class="form-control" id="price" placeholder="가격">
 	                  	</div>
 						<div class="form-group">
-	                    	<input type="number" class="form-control" placeholder="할인가">
+	                    	<input type="number" class="form-control" id="discount" placeholder="할인가">
 	                  	</div>
 	                  	
 						<div class="form-group">
@@ -93,15 +93,21 @@
 	                    	<textarea id="detail" class="form-control" ></textarea>
 	                  	</div>
 						<div class="form-group">
-	                    	<input type="file" class="form-control" multiple  id="file"/>
+							<div class="custom-file">
+	                    		<input type="file" class="custom-file-input" multiple  id="file"/>
+	                    	</div>	
+	                    	<span class="btn btn-success col-12 fileinput-button" onClick="triggerFile()">
+	                    		<i class="fas fa-plus"></i>
+	                    		<span>파일을 추가하세요</span>
+	                    	</span>
 	                  	</div>
 	                  	
 	                  	<div class="row form-group" id="preview"></div>
 	                  	
 						<div class="form-group">
-	                    	<button type="button" class="btn btn-primary">등록</button>
+	                    	<button type="button" class="btn btn-primary" id="bt_regist">등록</button>
 	                  	</div>
-	                  	
+	                </form>  	
 					</div>					
 				</div>
 				<!-- /.container-fluid -->
@@ -130,24 +136,69 @@
 			);
 		}
 	</script>
-	
+	<script type="text/javascript">
+		function triggerFile(){
+			//파일컴포넌트를 대상으로 클릭 효과를 낸다(간접적 클릭)
+			$("#file").trigger("click");
+		}
+		
+		function regist(){
+			//이미지 미리보기 기능은 단순히 우리만의 배열 처리였을 뿐ㅇ
+			//input type="file" 컴포넌트는 여전히 유저가 선택한 이미지
+			//정보를 그대로 유지하고 있다...
+			//따라서 기존의 폼을 그대로 전송하면 안되고, 개발자가 폼에 들
+			//어갈 파일을 직접 제어해야 한다..이 방법을 jquery가 지원해줌
+			let formData = new FormData();
+			console.log("전송하기 위한 폼에 넣을 파일의 수는 ", fileList.length);
+			
+			//파일뿐만 아니라 파라미터등을 심을수있다
+			formData.append("category_idx", $("#category").val());
+			formData.append("product_name", $("#product_name").val());
+			formData.append("brand", $("#brand").val());
+			formData.append("price", $("#price").val());
+			formData.append("discount", $("#discount").val());
+			formData.append("detail", $("#detail").val());
+			
+			for(let i=0;i<fileList.length;i++){
+				let file = fileList[i];
+				formData.append("file", file);
+			}
+			
+			//비동기방식으로 formData 를 전송하자!!
+			//processData:false  title=dd&writer= 쿼리스트링 방지
+			//application/x-www...
+			$.ajax({
+				url:"/admin/product/regist.jsp", 
+				type:"post", 
+				processData:false,  //쿼리스트링 화 방지
+				contentType:false, //application/x-www 방지
+				data:formData,
+				success:function(result, status, xhr){
+					alert("상품이 등록되었습니다");
+				}
+			});
+			
+		}
+	</script>
 	<script type="text/babel">
 		let tag=[];   // <ImageBox/> UI 컴포넌트를 누적할 배열
 		let previewRoot; //리엑트에 의해 렌더링될 컨테이너 요소		
 		let fileList=[]; //파일정보를 가진 배열 
-		let oriFiles; //원래 유저가 선택한 파일배열 원본
+		let oriFiles; //원래 유저가 선택한 파일배열 원본(읽기 전용)
 
 		function removeImg(e, index){
 			//시각적인 삭제 처리
 			$(e.target).parent().parent().remove();
 			
+			//x자 누를때 넘겨받은 고유번호로, 
 			//원본 배열에서, 해당 파일을 추출한다
 			let file=oriFiles[index];
 
-			//추출한 파일이 삭제정보 배열에서 몇번째 index인지 조사한다
+			//추출한 파일이 삭제대상의 배열에서 몇번째 살고있는지
+			// index를 조사한다
 			let sel_index = fileList.indexOf(file); 
 
-			fileList.splice( sel_index , 1);
+			fileList.splice( sel_index, 1);
 		}
 
 		function createCategoryOption(result){
@@ -201,11 +252,17 @@
 				height:200
 			});	
 			
+			$("#bt_regist").click(function(){
+				regist();
+			});			
+
 			$("#file").change(function(){
 				//this.files; //파일컴포넌트에서 선택한 파일의 보유한 배열 
 							//이 배열은 read only
-				console.log("당신이 선택한 파일 수는 ", this.files.length);
+				
+				//유저가 선택한 파일에 대한 정보를 배열로 얻기
 				oriFiles=this.files;
+				
 
 				//this.files는 이미 자바스크립트의 파일배열로써, 읽기만 가능하다
 				//따라서 수정가능한 배열이 되려면, this.files 안에 있는 File들을
