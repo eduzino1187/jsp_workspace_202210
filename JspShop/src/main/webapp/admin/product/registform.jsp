@@ -106,6 +106,7 @@
 	                  	
 						<div class="form-group">
 	                    	<button type="button" class="btn btn-primary" id="bt_regist">등록</button>
+	                    	<button type="button" class="btn btn-primary" id="bt_list">목록</button>
 	                  	</div>
 	                </form>  	
 					</div>					
@@ -272,6 +273,10 @@
 			
 			$("#bt_regist").click(function(){
 				regist();
+			});			
+
+			$("#bt_list").click(function(){
+				$(location).attr("href","/admin/product/list.jsp");
 			});			
 
 			$("#file").change(function(){

@@ -1,3 +1,5 @@
+<%@page import="com.jspshop.exception.PimgException"%>
+<%@page import="com.jspshop.exception.ColorException"%>
 <%@page import="com.jspshop.exception.PsizeException"%>
 <%@page import="com.jspshop.repository.PimgDAO"%>
 <%@page import="com.jspshop.repository.PsizeDAO"%>
@@ -143,16 +145,26 @@
 	
 	try{
 		//세부업무1 : Product 테이블에 넣기
-		productDAO.setSqlSession(sqlSession);
+		productDAO.setSqlSession(sqlSession);//주입
 		productDAO.insert(product);
 		
 		//세부업무2 : Psize 테이블에 넣기
-		for(Psize psize : product.getPsizeList() ){ //유저가 체크한 사이즈 수만큼...
+		psizeDAO.setSqlSession(sqlSession);//주입
+		for(Psize psize : product.getPsizeList()){ //유저가 체크한 사이즈 수만큼...
 			psizeDAO.insert(psize);
 		}
 		
 		//세부업무3: Color 테이블에 넣기 
+		colorDAO.setSqlSession(sqlSession);//주입 
+		for(Color color : product.getColorList() ){
+			colorDAO.insert(color);
+		}
 		
+		//세부업무4 : Pimg 테이블에 넣기 
+		pimgDAO.setSqlSession(sqlSession);//주입
+		for(Pimg pimg : product.getPimgList()){
+			pimgDAO.insert(pimg);
+		}
 		
 		sqlSession.commit();
 		messageObjct.setCode(1);
@@ -162,6 +174,14 @@
 		messageObjct.setCode(0);
 		messageObjct.setMsg(e.getMessage());
 	}catch(PsizeException e){
+		sqlSession.rollback();
+		messageObjct.setCode(0);
+		messageObjct.setMsg(e.getMessage());
+	}catch(ColorException e){
+		sqlSession.rollback();
+		messageObjct.setCode(0);
+		messageObjct.setMsg(e.getMessage());
+	}catch(PimgException e){
 		sqlSession.rollback();
 		messageObjct.setCode(0);
 		messageObjct.setMsg(e.getMessage());
