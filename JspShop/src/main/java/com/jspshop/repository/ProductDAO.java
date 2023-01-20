@@ -1,6 +1,7 @@
 package com.jspshop.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -26,8 +27,8 @@ public class ProductDAO {
 		}
 	}
 	
-	public List selectAll() {
-		return sqlSession.selectList("Product.selectAll");
+	public List selectAll(Map map) {
+		return sqlSession.selectList("Product.selectAll", map);
 	}
 }
 

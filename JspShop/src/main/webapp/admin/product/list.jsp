@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="com.jspshop.util.PageManager"%>
 <%@page import="com.jspshop.domain.Product"%>
 <%@page import="java.util.List"%>
@@ -15,7 +16,15 @@
 	SqlSession sqlSession = mybatisConfig.getSqlSession();
 	productDAO.setSqlSession(sqlSession);
 	
-	List<Product> productList=productDAO.selectAll();
+	//만일 사용자가 검색기능을 이용하여 파라미터를 넘기면, 그 파라미터값을
+	//맵에 채워서  selectAll() 호출하자!
+	String category=request.getParameter("category");
+	String keyword=request.getParameter("keyword");
+	HashMap<String , String> map=new HashMap<String, String>();
+	map.put("category", category); //사용자가 선택한 select 박스의 값
+	map.put("keyword", keyword); //사용자가 입력한 키워드 텍스트박스의 값 
+	
+	List<Product> productList=productDAO.selectAll(map);
 	pm.init(productList, request);//페이징 계산 맡기기
 %>
 <!DOCTYPE html>
@@ -73,7 +82,11 @@
 						        <h3 class="card-title">Responsive Hover Table</h3>
 						
 						        <div class="card-tools">
-						            <div class="input-group input-group-sm" style="width: 150px;">
+						            <div class="input-group input-group-sm" style="width: 350px;">
+										<select class="form-control">
+											<option>상품명</option>
+											<option>브랜드</option>
+										</select>			                
 						                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 						
 						                <div class="input-group-append">
@@ -98,17 +111,30 @@
 						                </tr>
 						            </thead>
 						            <tbody>
+						            	<%
+						            		int curPos=pm.getCurPos();
+						            		int num=pm.getNum();
+						            	%>
+						            	<%for(int i=1;i<=pm.getPageSize();i++){%>
+						            	<%if(num<1)break; %>
+						            	<%Product product=productList.get(curPos++); %>
 						                <tr>
-						                    <td>183</td>
-						                    <td>John Doe</td>
-						                    <td>11-7-2014</td>
-						                    <td><span class="tag tag-success">Approved</span></td>
-						                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+						                    <td><%=num-- %></td>
+						                    <td><%=product.getCategory().getCategory_name() %></td>
+						                    <td><%=product.getProduct_name() %></td>
+						                    <td><%=product.getBrand() %></td>
+						                    <td><%=product.getPrice() %></td>
+						                    <td><%=product.getDiscount() %></td>
 						                </tr>
+						                <%} %>
 						            </tbody>
 						        </table>
+														        
 						    </div>
 						    <!-- /.card-body -->
+						    <div class="card-footer">
+							    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div>
+						    </div>
 						</div>
 					</div>					
 				</div>

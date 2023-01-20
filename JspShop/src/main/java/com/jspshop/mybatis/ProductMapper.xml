@@ -30,9 +30,13 @@
 	</resultMap>
 	
 	<!-- 모든 상품 가져오기 -->
-	<select id="selectAll" resultMap="productMap">
-		select * from product 
+	<select id="selectAll" resultMap="productMap" 
+		parameterMap="java.util.Map">
+		select * from product
+		where ${category}  like '%${keyword}%'  
 	</select>	
+	
+	
 	
 </mapper>
 
