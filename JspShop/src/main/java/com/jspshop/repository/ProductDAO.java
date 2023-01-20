@@ -1,5 +1,7 @@
 package com.jspshop.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.jspshop.domain.Product;
@@ -23,7 +25,10 @@ public class ProductDAO {
 			throw new ProductException("상품이 등록되지 않았어요");
 		}
 	}
-
+	
+	public List selectAll() {
+		return sqlSession.selectList("Product.selectAll");
+	}
 }
 
 

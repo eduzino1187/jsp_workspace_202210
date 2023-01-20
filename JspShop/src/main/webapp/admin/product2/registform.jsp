@@ -156,25 +156,49 @@
 			}			
 		}
 
+function createFile(){
+	var request = new XMLHttpRequest();
+	request.open('GET', "/data/1674113737906.png", true);
+	request.responseType = 'blob';
+	request.onload = function() {
+	    var reader = new FileReader();
+	    reader.readAsDataURL(request.response);
+	    reader.onload =  function(e){
+	        console.log('DataURL:', e.target.result);
+	        var file = new File([request.response], "1674113737906.png");
+	        //console.log(file);
+	        
+	        
+	        fileList.push(file);
+			previewImg();
+
+	    };
+	};
+	request.send();
+
+}
+
+
 		function getImage(){
- 		$.get("/data/1674113295386.png").then(function(data) {
+ 		$.get("http://localhost:9999/data/1674113737906.png").then(function(data) {
 			var blob = new Blob([data], { type: 'image/png' });
 			//console.log("blob is ", blob);
 		
-			var file = new File([blob], "1674113737394.png" , {type:"image/png"});
+			var file = new File([blob], "1674113737906.png" , {type:"image/png"});
 			
 			console.log("file : ", file);
 			fileList.push(file);
 			previewImg();
 		});
 
-
 		}
 
 		
 		$(function(){
 			previewRoot = ReactDOM.createRoot(document.getElementById("preview"));
-			getImage();
+			
+			createFile();
+
 			$("#detail").summernote({
 				height:200
 			});

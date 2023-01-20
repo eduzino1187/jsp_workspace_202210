@@ -14,5 +14,33 @@
 		</selectKey>
 	</insert>
 	
+	<!-- Category를 가져오기 위한 리절트맵 -->
+	<resultMap type="Product" id="productMap">
+		<id 			column="product_idx" 		property="product_idx"/>
+		<result 	column="product_name" 	property="product_name"/>
+		<result 	column="brand" 				property="brand"/>
+		<result 	column="price" 				property="price"/>
+		<result 	column="discount" 			property="discount"/>
+		<result 	column="detail" 				property="detail"/>
+		<association  
+			column="category_idx" 
+			property="category"
+			javaType="Category"
+			select="Category.selectByProduct"/>
+	</resultMap>
+	
+	<!-- 모든 상품 가져오기 -->
+	<select id="selectAll" resultMap="productMap">
+		select * from product 
+	</select>	
 	
 </mapper>
+
+
+
+
+
+
+
+
+
