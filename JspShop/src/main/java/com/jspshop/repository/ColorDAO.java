@@ -13,13 +13,12 @@ public class ColorDAO {
 		this.sqlSession = sqlSession;
 	}
 	
-	public int insert(Color color) throws ColorException{
-		int result=0;
-		result=sqlSession.insert("Color.insert", color);
+	public void insert(Color color) throws ColorException{
+		int result=sqlSession.insert("Color.insert", color);
 		if(result<1) {
 			throw new ColorException("색상 등록 실패");
 		}
-		return result;
+
 	}
 }
 

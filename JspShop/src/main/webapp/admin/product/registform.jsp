@@ -83,7 +83,7 @@
 						<div class="form-group">
 							<%for(int i=0;i<colorList.length;i++){ %>
 						    <div class="icheck-primary d-inline">
-						        <input type="checkbox" id="color<%=i%>" name="size" value="<%=colorList[i]%>">
+						        <input type="checkbox" id="color<%=i%>" name="color" value="<%=colorList[i]%>">
 						        <label for="color<%=i%>"><%=colorList[i]%></label>
 						    </div>
 							<%} %>
@@ -157,6 +157,23 @@
 			formData.append("brand", $("#brand").val());
 			formData.append("price", $("#price").val());
 			formData.append("discount", $("#discount").val());
+			//체크된것만 데이터를 모으자
+			let sizeCheckedArray=[]; //체크된 데이터만 모을 배열
+			for(let i=0;i<$("input[name='size']").length;i++){
+				if($($("input[name='size']")[i]).is(":checked")){
+					//배열에 값 밀어넣기
+					sizeCheckedArray.push($($("input[name='size']")[i]).val());
+				}
+			}
+			formData.append("size[]", sizeCheckedArray);
+			
+			//배열을 보내되, 더 줄여쓰는 코드를 작성 (제이쿼리)
+			let colorCheckedArray=[];
+			$.each( $("input[name='color']:checked") , function(){
+				colorCheckedArray.push( $(this).val());
+			});
+			formData.append("color[]", colorCheckedArray);
+			
 			formData.append("detail", $("#detail").val());
 			
 			
@@ -169,7 +186,7 @@
 			//processData:false  title=dd&writer= 쿼리스트링 방지
 			//application/x-www...
 			$.ajax({
-				url:"/admin/product/regist.jsp", 
+				url:"/admin/product/regist2.jsp", 
 				type:"post", 
 				processData:false,  //쿼리스트링 화 방지
 				contentType:false, //application/x-www 방지
@@ -209,7 +226,7 @@
 			for(let i=0; i<result.length;i++){ //json 배열만큼 반복
 				
 				let category=result[i];//카테고리 하나 꺼내기
-				op+="<option value='"+category.category_idx+"'>"+category.cateogry_name+"</option>";
+				op+="<option value='"+category.category_idx+"'>"+category.category_name+"</option>";
 			}
 			$("#category").html(op);								
 		}

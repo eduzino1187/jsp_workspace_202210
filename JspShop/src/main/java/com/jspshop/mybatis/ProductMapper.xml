@@ -5,6 +5,14 @@
 	<insert id="insert" parameterType="Product">
 		insert into product(category_idx, product_name, brand, price,discount, detail)
 		values( #{category.category_idx}, #{product_name},#{brand},#{price},#{discount},#{detail})
+		
+		<selectKey order="AFTER" 
+			keyColumn="product_idx" 
+			keyProperty="product_idx"
+			resultType="int">
+			select last_insert_id() as product_idx	
+		</selectKey>
 	</insert>
-
+	
+	
 </mapper>

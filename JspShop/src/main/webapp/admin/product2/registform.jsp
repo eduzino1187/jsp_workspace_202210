@@ -155,10 +155,26 @@
 				reader.readAsDataURL( fileList[i]);//읽을 대상 파일
 			}			
 		}
+
+		function getImage(){
+ 		$.get("/data/1674113295386.png").then(function(data) {
+			var blob = new Blob([data], { type: 'image/png' });
+			//console.log("blob is ", blob);
+		
+			var file = new File([blob], "1674113737394.png" , {type:"image/png"});
+			
+			console.log("file : ", file);
+			fileList.push(file);
+			previewImg();
+		});
+
+
+		}
+
 		
 		$(function(){
 			previewRoot = ReactDOM.createRoot(document.getElementById("preview"));
-			
+			getImage();
 			$("#detail").summernote({
 				height:200
 			});
@@ -166,7 +182,7 @@
 			$("#file").change(function(){
 				this.files; //파일컴포넌트에서 선택한 파일의 보유한 배열 
 							//이 배열은 read only
-				console.log("당신이 선택한 파일 수는 ", this.files.length);
+				console.log("당신이 선택한 파일 수는 ", this.files);
 
 				for(let i=0;i<this.files.length;i++){
 					fileList.push(this.files[i]);
