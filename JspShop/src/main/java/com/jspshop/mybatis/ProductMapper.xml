@@ -33,7 +33,14 @@
 			property="pimgList"
 			javaType="java.util.List"
 			ofType="Pimg"
-			select="Pimg.selectByProduct"/>			
+			select="Pimg.selectByProduct"/>
+						
+		<collection column="product_idx" 
+			property="colorList"
+			javaType="java.util.List"
+			ofType="Color"
+			select="Color.selectByProduct"/>			
+			
 			
 	</resultMap>
 	

@@ -16,7 +16,9 @@
 
 	//사용자가 넘긴 상위 카테고리를 이용하여, 소속된 상품 가져오기 
 	String category_idx=request.getParameter("category_idx");
-	
+	if(category_idx==null){
+		category_idx="0";
+	}
 	List<Product> productList=productDAO.selectByCategory(Integer.parseInt(category_idx));
 	
 	
@@ -214,7 +216,15 @@
                     	<%Product product = productList.get(i); %>
                         <div class="col-lg-4 col-md-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="/data/<%=product.getPimgList().get(0).getFilename()%>">
+                            <%
+                            	String filename=null;
+                            	if(product.getPimgList().size() >0){
+                            		filename = product.getPimgList().get(0).getFilename();
+                            	}else{
+                            		out.print("파일 없슴요..");
+                            	}
+                            %>
+                                <div class="product__item__pic set-bg" data-setbg="/data/<%=filename%>">
                                     <div class="label new">New</div>
                                     <ul class="product__hover">
                                         <li><a href="img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
