@@ -2,13 +2,6 @@
 <%@page import="java.util.List"%>
 <%@page import="com.jspshop.repository.CategoryDAO"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%!
-	CategoryDAO categoryDAO=new CategoryDAO();
-%>
-<%
-	//카테고리 가져오기 
-	List<Category> categoryList=categoryDAO.selectAll();
-%>
 <!DOCTYPE html>
 <html lang="zxx">
 
