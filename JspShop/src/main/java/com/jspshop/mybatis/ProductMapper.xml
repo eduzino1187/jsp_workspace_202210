@@ -30,10 +30,15 @@
 	</resultMap>
 	
 	<!-- 모든 상품 가져오기 -->
-	<select id="selectAll" resultMap="productMap" 
-		parameterMap="java.util.Map">
+	<select id="selectBySearch" resultMap="productMap" 
+		parameterType="java.util.Map">
 		select * from product
 		where ${category}  like '%${keyword}%'  
+	</select>	
+	
+	<select id="selectAll" resultMap="productMap" 
+		parameterType="java.util.Map">
+		select * from product
 	</select>	
 	
 	

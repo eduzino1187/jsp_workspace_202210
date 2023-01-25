@@ -24,7 +24,13 @@
 	map.put("category", category); //사용자가 선택한 select 박스의 값
 	map.put("keyword", keyword); //사용자가 입력한 키워드 텍스트박스의 값 
 	
-	List<Product> productList=productDAO.selectAll(map);
+	List<Product> productList=null;
+	
+	if(keyword !=null){	//검색이라면..
+		productList=productDAO.selectBySearch(map);
+	}else{
+		productList=productDAO.selectAll();
+	}
 	pm.init(productList, request);//페이징 계산 맡기기
 %>
 <!DOCTYPE html>
@@ -82,19 +88,21 @@
 						        <h3 class="card-title">Responsive Hover Table</h3>
 						
 						        <div class="card-tools">
+									<form id="form1">
 						            <div class="input-group input-group-sm" style="width: 350px;">
-										<select class="form-control">
-											<option>상품명</option>
-											<option>브랜드</option>
-										</select>			                
-						                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-						
+											<select class="form-control" name="category">
+												<option value="product_name">상품명</option>
+												<option value="brand">브랜드</option>
+											</select>			                
+							                <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
+										
 						                <div class="input-group-append">
-						                    <button type="submit" class="btn btn-default">
+						                    <button type="button" class="btn btn-default" id="bt_search">
 						                        <i class="fas fa-search"></i>
 						                    </button>
 						                </div>
 						            </div>
+						            </form>
 						        </div>
 						    </div>
 						    <!-- /.card-header -->
@@ -152,9 +160,31 @@
 	</div>
 	<!-- ./wrapper -->
 	<%@ include file="/admin/inc/footer_link.jsp" %>
-
+	<script type="text/javascript">
+		function getListBySearch(){
+			// 폼을 전송하자
+			$("#form1").attr({
+				action:"/admin/product/list.jsp",
+				method:"post"
+			});
+			$("#form1").submit();
+		}
+		
+		$(function(){
+			$("#bt_search").click(function(){
+				getListBySearch();
+			});			
+			
+		});			
+	</script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 
