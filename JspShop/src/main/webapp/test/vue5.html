@@ -12,6 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+    
+    
         //디자인 적으로 재사용가능한 단위인 컴포넌트로 정의 
         const BoardTable={
             template:`
@@ -35,15 +37,19 @@
             , props:['br'] 
             , data(){
                 return{
+                	productList:[],
                     border:this.br
                 };
             }
         };
-
-
+        
+        
+        let app1;
+        
         //렌더링 영역과 뷰인스턴스 데이터를 연결하는 바인드 사용하기
         function init() {
-            let app1 = new Vue({
+        	
+            app1 = new Vue({
                 el:"#app1", 
                 //UI 컴포넘트 등록
                 components:{
@@ -51,7 +57,17 @@
                 }                   
             });
         }
-
+        
+        function getList(){
+            $.ajax({
+                url:"/test/list.jsp?category_idx=1",
+				type:"GET", 
+				success:function(result, status, xhr){
+										
+				}
+            });
+        }
+        
         $(function () {
             init();
         });                

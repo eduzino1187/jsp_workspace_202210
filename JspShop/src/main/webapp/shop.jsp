@@ -1,7 +1,26 @@
+<%@page import="com.jspshop.domain.Product"%>
+<%@page import="com.jspshop.mybatis.MybatisConfig"%>
+<%@page import="com.jspshop.repository.ProductDAO"%>
 <%@page import="com.jspshop.domain.Category"%>
 <%@page import="java.util.List"%>
 <%@page import="com.jspshop.repository.CategoryDAO"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%!
+	MybatisConfig mybatisConfig =MybatisConfig.getInstance();
+	ProductDAO productDAO = new ProductDAO();
+%>
+<%
+	//상품 DAO는 트랜잭션 때문에, SqlSession을 멤버변수로 두고,  setter로 
+	//주입받기를 기다리고 있으므로... (세션 주입)
+	productDAO.setSqlSession(mybatisConfig.getSqlSession());
+
+	//사용자가 넘긴 상위 카테고리를 이용하여, 소속된 상품 가져오기 
+	String category_idx=request.getParameter("category_idx");
+	
+	List<Product> productList=productDAO.selectByCategory(Integer.parseInt(category_idx));
+	
+	
+%>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -57,7 +76,7 @@
                                     <%Category category=categoryList.get(i); %>
                                     <div class="card">
                                         <div class="card-heading active">
-                                            <a data-toggle="collapse" data-target="#collapse<%=i%>"><%=category.getCategory_name() %></a>
+                                            <a onClick="getProductList(<%=category.getCategory_idx() %>)" data-toggle="collapse" data-target="#collapse<%=i%>"><%=category.getCategory_name() %></a>
                                         </div>
                                         <div id="collapse<%=i%>" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
@@ -191,10 +210,11 @@
                 </div>
                 <div class="col-lg-9 col-md-9">
                     <div class="row">
-                    	<%for(int i=0;i<12;i++){ %>
+                    	<%for(int i=0;i<productList.size();i++){ %>
+                    	<%Product product = productList.get(i); %>
                         <div class="col-lg-4 col-md-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="img/shop/shop-1.jpg">
+                                <div class="product__item__pic set-bg" data-setbg="/data/<%=product.getPimgList().get(0).getFilename()%>">
                                     <div class="label new">New</div>
                                     <ul class="product__hover">
                                         <li><a href="img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
@@ -203,7 +223,7 @@
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="#">Furry hooded parka</a></h6>
+                                    <h6><a href="#"><%=product.getProduct_name() %></a></h6>
                                     <div class="rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -247,6 +267,22 @@
 
 <!-- Js Plugins -->
 <%@ include file="/inc/footer_link.jsp" %>
+<script type="text/javascript">
+//카테고리 선택시 하위 상품 요청하기
+function getProductList(category_idx){
+	$(location).attr("href", "/shop.jsp?category_idx="+category_idx);	
+}
+
+$(function(){
+	
+});
+
+</script>
+
 </body>
 
 </html>
+
+
+
+
