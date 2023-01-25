@@ -22,6 +22,7 @@
 		<result 	column="price" 				property="price"/>
 		<result 	column="discount" 			property="discount"/>
 		<result 	column="detail" 				property="detail"/>
+		
 		<association  
 			column="category_idx" 
 			property="category"
@@ -34,13 +35,13 @@
 			javaType="java.util.List"
 			ofType="Pimg"
 			select="Pimg.selectByProduct"/>
-						
+							
 		<collection column="product_idx" 
 			property="colorList"
 			javaType="java.util.List"
 			ofType="Color"
 			select="Color.selectByProduct"/>			
-			
+ 				
 			
 	</resultMap>
 	

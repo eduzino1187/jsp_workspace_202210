@@ -1,3 +1,4 @@
+<%@page import="org.apache.ibatis.session.SqlSession"%>
 <%@page import="com.jspshop.domain.Product"%>
 <%@page import="com.jspshop.mybatis.MybatisConfig"%>
 <%@page import="com.jspshop.repository.ProductDAO"%>
@@ -12,7 +13,8 @@
 <%
 	//상품 DAO는 트랜잭션 때문에, SqlSession을 멤버변수로 두고,  setter로 
 	//주입받기를 기다리고 있으므로... (세션 주입)
-	productDAO.setSqlSession(mybatisConfig.getSqlSession());
+	SqlSession sqlSession = mybatisConfig.getSqlSession();
+	productDAO.setSqlSession(sqlSession);
 
 	//사용자가 넘긴 상위 카테고리를 이용하여, 소속된 상품 가져오기 
 	String category_idx=request.getParameter("category_idx");
@@ -78,9 +80,9 @@
                                     <%Category category=categoryList.get(i); %>
                                     <div class="card">
                                         <div class="card-heading active">
-                                            <a onClick="getProductList(<%=category.getCategory_idx() %>)" data-toggle="collapse" data-target="#collapse<%=i%>"><%=category.getCategory_name() %></a>
+                                            <a onClick="getProductList(<%=category.getCategory_idx() %>)"  data-target="#collapse<%=i%>"><%=category.getCategory_name() %></a>
                                         </div>
-                                        <div id="collapse<%=i%>" class="collapse show" data-parent="#accordionExample">
+                                        <div id="collapse<%=i%>" class="collapse hide" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <ul>
                                                     <li><a href="#">Coats</a></li>
@@ -229,7 +231,7 @@
                                     <ul class="product__hover">
                                         <li><a href="img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
                                         <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                        <li><a href="javascript:addCart(<%=product.getProduct_idx()%>)"><span class="icon_bag_alt"></span></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
@@ -278,6 +280,18 @@
 <!-- Js Plugins -->
 <%@ include file="/inc/footer_link.jsp" %>
 <script type="text/javascript">
+
+function addCart(product_idx){
+	//비동기 요청으로 서버에 장바구니 담기 요청을 시도하자!
+	$.ajax({
+		url:"/payment/cart.jsp?product_idx="+product_idx,
+		type:"GET",
+		success:function(result, stauts, xhr){
+			alert(result);
+		}
+	});
+}
+
 //카테고리 선택시 하위 상품 요청하기
 function getProductList(category_idx){
 	$(location).attr("href", "/shop.jsp?category_idx="+category_idx);	
@@ -286,12 +300,12 @@ function getProductList(category_idx){
 $(function(){
 	
 });
-
 </script>
-
 </body>
-
 </html>
+<%
+	mybatisConfig.release(sqlSession);
+%>
 
 
 
