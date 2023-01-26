@@ -64,6 +64,17 @@ create table review(
 ) default  character set  utf8;
 
 
+create table member(
+	member_idx int primary key auto_increment
+	, id varchar(20)
+	, pass varchar(20)
+	, name varchar(20)
+	, email varchar(40)
+	, addr1 varchar(50)
+	, addr2 varchar(50)
+	, regdate timestamp default now()
+) default  character set  utf8;
+
 
 
 
