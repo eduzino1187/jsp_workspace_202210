@@ -62,9 +62,20 @@
                             <li><a href="#"><span class="icon_heart_alt"></span>
                                 <div class="tip">2</div>
                             </a></li>
-                            <li><a href="#"><span class="icon_bag_alt"></span>
-                                <div class="tip">2</div>
-                            </a></li>
+                            <li>
+                            	<%if(session.getAttribute("member")==null){ %>
+	                            	<a href="javascript:alert('로그인이 필요한 서비스입니다');">
+	                            		<span class="icon_bag_alt"></span>
+	                                	<div class="tip">2</div>
+	                                </a>
+                                <%}else{ %>
+	                            	<a href="/payment/cartlist.jsp">
+	                            		<span class="icon_bag_alt"></span>
+	                                	<div class="tip">2</div>
+	                                </a>
+                                <%} %>
+                                
+                            </li>
                         </ul>
                     </div>
                 </div>
