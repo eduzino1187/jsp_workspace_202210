@@ -20,16 +20,15 @@
 			template:`
 				<tr>
 					<td>{{m_idx}}</td>
-					<td><a href="#" v-on:click="getDetail(m_index, m_id, m_pass)">{{m_id}}</a></td>
+					<td><a href="#" v-on:click="getDetail(m_idx, id, pass)">{{m_id}}</a></td>
 					<td>{{m_name}}</td>
 					<td>{{m_pass}}</td>
 					<td>{{m_email}}</td>
 				</tr>
 			`
-			, props:['index','member_idx','id','name','pass','email']
+			, props:['member_idx','id','name','pass','email']
 			, data(){
 				return{
-					m_index:this.index,
 					m_idx:this.member_idx, 
 					m_id:this.id,
 					m_name:this.name,
@@ -38,8 +37,9 @@
 				}
 			}, 
 			methods:{
-				getDetail:function(n, id, pass){
-					index=n;
+				getDetail:function(member_idx, id, pass){
+					index=member_idx;
+					
 					getMember(id, pass);
 				}				
 			}
@@ -55,6 +55,15 @@
 				data:{
 					memberList:[],
 					member:{}
+				}, 
+				methods:{
+					beforeUpdate:function(){
+						console.log("beforeUpdate called..");
+					}, 
+					updated:function(){
+						console.log("update called..");
+					}
+					
 				}
 			});
 		}
@@ -106,6 +115,10 @@
 		}
 		
 		//회원수정
+		function edit(){
+			//alert(index);
+			app1.memberList[0].id="batman";
+		}
 		
 		//회원삭제
 		function del(){
@@ -187,12 +200,12 @@
 					<tbody>
 						<template v-for="(member, index) in memberList">			
 							<row 
-								v-bind:index="index"
-								v-bind:member_idx="member['member_idx']" 
-								v-bind:id="member['id']" 
-								v-bind:name="member['name']" 
-								v-bind:pass="member['pass']" 
-								v-bind:email="member['email']" 
+								:key="member['member_idx']"
+								:member_idx="member['member_idx']" 
+								:id="member['id']" 
+								:name="member['name']" 
+								:pass="member['pass']" 
+								:email="member['email']" 
 							/>
 
 						</template>
