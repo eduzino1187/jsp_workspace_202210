@@ -30,9 +30,7 @@
 	//원래는 로그인 한 유저를 대상으로 하므로,  session.getAttribute()
 	//얻어와야 한다..( 추후 진행)
 	//누가??
-	Member member = new Member();
-	member.setMember_idx(1); //임시 데이터 
-	member.setId("zino");
+	Member member =(Member)session.getAttribute("member");
 	
 	//무엇을? 
 	String product_idx=request.getParameter("product_idx");

@@ -38,13 +38,9 @@
 				        <div class="form-group">
 				            <input type="text" class="form-control" placeholder="Enter pass" name="pass">
 				        </div>
-				        <div class="form-group">
-				            <input type="text" class="form-control" placeholder="Enter name" name="name">
-				        </div>
-				        <div class="form-group">
-				            <input type="text" class="form-control" placeholder="Enter email" name="email">
-				        </div>
-				        <button type="button" class="btn btn-primary" id="bt_regist">가입</button>
+				       
+				        <button type="button" class="btn btn-success" id="bt_login">Login</button>
+				        <button type="button" class="btn btn-success" id="bt_regist">신규가입</button>
 				        
 				    </form>
     			
@@ -81,9 +77,20 @@ function regist(){
 }
 
 $(function(){
-	$("#bt_regist").click(function(){
-		regist();	
+	
+	$("#bt_login").click(function(){
+		$("#form1").attr({
+			action:"/member/login.jsp",
+			method:"post"
+		});
+		$("#form1").submit();
 	});
+	
+	$("#bt_regist").click(function(){
+		//location.href="";
+		$(location).attr("href", "/member/joinform.jsp");
+	});
+	
 });
 </script>
 </body>

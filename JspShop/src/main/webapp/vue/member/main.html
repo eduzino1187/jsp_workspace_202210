@@ -99,33 +99,33 @@ const Row={
 	//생명주기 메서드들의 동작 방식 및 시점 알아보기
 	//화면에 DOM이 나타나기 이전 시점임..
 	beforeCreate:function(){
-		console.log("beforeCreate called !!");
+		console.log("Row's beforeCreate called !!");
 	},
 	created:function(){
-		console.log("created called !!");
+		console.log("Row's created called !!");
 	},
 	
 	beforeMount:function(){
-		console.log("beforeMount called !!");
+		console.log("Row's beforeMount called !!");
 	},
 	mounted:function(){
-		console.log("mounted called !!");
+		console.log("Row's mounted called !!");
 	},
 	
 	beforeUpdate:function(){
 		//데이터가 변경될때 이 메서드 호출됨, but 변경된 데이터가 화면에 
 		//반영되지는 않음..
-		console.log("beforeUpdate called !!");
+		console.log("Row's beforeUpdate called !!");
 	},
 	updated:function(){
-		console.log("updated called !!");
+		console.log("Row's updated called !!");
 	},
 	
 	beforeDestory:function(){
-		console.log("beforeDestory called !!");
+		console.log("Row's beforeDestory called !!");
 	},
 	destoryed:function(){
-		console.log("destoryed called !!");
+		console.log("Row's destoryed called !!");
 	},
 	
 
@@ -143,7 +143,8 @@ function init(){
 		}, 
 		methods:{
 			setChange:function(){
-				this.count=10;		
+				this.memberList[i].
+				//this.memberList.push({});
 			}
 		}
 		

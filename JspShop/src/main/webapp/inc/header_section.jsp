@@ -1,3 +1,4 @@
+<%@page import="com.jspshop.domain.Member"%>
 <%@page import="com.jspshop.domain.Category"%>
 <%@page import="java.util.List"%>
 <%@page import="com.jspshop.repository.CategoryDAO"%>
@@ -43,8 +44,18 @@
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <a href="/member/loginform.jsp">Login</a>
-                            <a href="/member/joinform.jsp">Register</a>
+                        
+                        	<%if(session.getAttribute("member")==null){%>
+	                            <a href="/member/loginform.jsp">Login</a>
+	                            <a href="/member/joinform.jsp">Register</a>
+                            <%}else{%>
+                            <%
+                            	Member member=(Member)session.getAttribute("member");
+                            %>
+	                            <a href="/member/logout.jsp">logout</a>
+	                            <a href="#"><%=member.getId()%></a>
+                            <%} %>
+                            
                         </div>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>

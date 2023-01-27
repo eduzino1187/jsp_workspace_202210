@@ -282,14 +282,18 @@
 <script type="text/javascript">
 
 function addCart(product_idx){
-	//비동기 요청으로 서버에 장바구니 담기 요청을 시도하자!
-	$.ajax({
-		url:"/payment/cart.jsp?product_idx="+product_idx,
-		type:"GET",
-		success:function(result, stauts, xhr){
-			alert(result);
-		}
-	});
+	<%if(session.getAttribute("member")==null){%>
+		alert("로그인이 필요한 서비스입니다");
+	<%}else{ //로그인 한 경우 %>
+		//비동기 요청으로 서버에 장바구니 담기 요청을 시도하자!
+		$.ajax({
+			url:"/payment/cart.jsp?product_idx="+product_idx,
+			type:"GET",
+			success:function(result, stauts, xhr){
+				alert(result);
+			}
+		});
+	<%}%>
 }
 
 //카테고리 선택시 하위 상품 요청하기
